@@ -43,7 +43,7 @@ public class SwaggerConfiguration {
 					 * boot 에서는    / => root-path
 					 * */
 //					.paths(regex("/.*/rest.*")).build()
-					.paths(PathSelectors.ant("/**/rest/**"))
+					.paths(PathSelectors.any())
 					.build()
 					.useDefaultResponseMessages(false);
 	}
