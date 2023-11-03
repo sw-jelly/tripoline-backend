@@ -1,4 +1,4 @@
-package com.ssafy.tripoline.member.model.controller;
+package com.ssafy.tripoline.member.controller;
 
 import javax.servlet.http.HttpSession;
 
@@ -30,7 +30,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 
 @RestController // Controller내에서 작성하는 모든 메서드에 기본적으로 @ResponseBody로 출력됨.
-@RequestMapping("/rest") // 요청하는 자원(Domain)명을 붙인다.
+@RequestMapping("/memberRest") // 요청하는 자원(Domain)명을 붙인다.
 @Api(value = "Member Rest API", description = "Member API 정보")
 @CrossOrigin(origins = { "*" }) // 다른 서버에서 Ajax 요청이 와도 서비스 되도록 설정
 //기본적으로 같은 서버, 같은 context(webApp) 끼리만 사용가능, 브라우저에서 prefly해주고 서버가 허용해줘야하는데 그것이 바로 crossOrigin
