@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.ssafy.tripoline.attraction.model.dao.AttractionDao">
+
+	<resultMap type="Attraction" id="AttractionDto">
+		<result column="content_id" property="contentId"/>
+		<result column="content_type_id" property="contentTypeId"/>
+		<result column="title" property="title"/>
+		<result column="addr1" property="addr1"/>
+		<result column="addr2" property="addr2"/>
+		<result column="zipcode" property="zipcode"/>
+		<result column="tel" property="tel"/>
+		<result column="first_image" property="firstImage"/>
+		<result column="first_image2" property="firstImage2"/>
+		<result column="sido_code" property="sidoCode"/>
+		<result column="gugun_code" property="gugunCode"/>
+		<result column="latitude" property="latitude"/>
+		<result column="longitude" property="longitude"/>
+		<result column="overview" property="overview"/>
+	</resultMap>
+
+	<select id="searchAll" resultMap="AttractionDto">
+		select content_id, content_type_id, title, addr1, 
+				addr2, zipcode, tel, first_image ,first_image2,
+				sido_code, gugun_code, latitude, longitude, overview
+		from attraction_info
+	</select>
+	
+	<select id="searchByTitle" parameterType="java.util.Map" resultMap="AttractionDto">
+		select content_id, content_type_id, title, addr1, 
+				addr2, zipcode, tel, first_image ,first_image2,
+				sido_code, gugun_code, latitude, longitude, overview
+		from attraction_info
+		where (title like CONCAT('%', #{keyword}, '%') or addr1 like CONCAT('%', #{keyword}, '%'))
+		<if test="sidoCode != 0">
+			and sido_code = #{sidoCode}
+		</if>
+		<if test="gugunCode != 0">
+			and gugun_code = #{gugunCode}
+		</if>
+
+	</select>
+	
+	<select id="searchByLocation" parameterType="int" resultMap="AttractionDto">
+		select content_id, content_type_id, title, addr1, 
+				addr2, zipcode, tel, first_image ,first_image2,
+				sido_code, gugun_code, latitude, longitude, overview
+		from attraction_info
+		<where>
+			<if test="sidoCode != 0">
+				sido_code = #{sidoCode}
+			</if>
+			<if test="gugunCode != 0">
+				<if test="sidoCode != 0"> and </if>
+				gugun_code = #{gugunCode}
+			</if>
+			<if test="contentTypeId != 0">
+				<if test="sidoCode != 0 or gugunCode != 0"> and </if>
+				content_type_id = #{contentTypeId}
+			</if>
+		</where>
+	</select>
+
+	<select id="searchSido" resultType="Sido">
+		select sido_code as sidoCode, sido_name as sidoName
+		from sido
+	</select>
+	
+	<select id="searchGugun" parameterType="int" resultType="Gugun">
+		select sido_code as sidoCode, gugun_code as gugunCode, gugun_name as gugunName
+		from gugun
+		where sido_code = #{sidoCode}
+	</select>
+</mapper>    
