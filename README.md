@@ -1,92 +1,70 @@
-# EnjoyTrip_SpringBoot_서울_13반_지인성_양유경
+# 관통프로젝트: 
+### 프로젝트이름 : EnjoyTripSpring
+### 제출일: 2023.11.03일
+
+### 참여 페어
+- 지인성(조장), 양유경
+
+### 처리된 요구사항 목록
+  
+|난이도|구현기능|세부|작성여부(O/X)|
+|:---:|---|---|:---:|
+|기본|메인페이지||X|
+|기본|회원관리|회원정보 등록|O|
+|기본|회원관리|회원정보 수정|O|
+|기본|회원관리|회원정보 삭제|O|
+|기본|회원관리|회원정보 검색|O|
+|기본|로그인/로그아웃||O|
+|기본|관광지 정보 관리|전체검색|O|
+|기본|관광지 정보 관리|상세 조회|O|
+|기본|관광지 정보 관리|지역별 조회|O|
+|기본|관광지 정보 관리|관광지 종류별 조회|O|
+|추가|나만의 여행 계획 관리||X|
+|심화|HotPlace 관리||X|
+|심화|게시판(여행정보 공유) 관리||O|
+
+<span style="color:red">
+* 작성된 기능은 반드시 캡쳐되어야 합니다.<br>
+* 추가로 구현한 기능을 표에 추가시키세요.
+</span>
+
+### 실행화면 캡쳐
+
+#### 회원 관리
+![image](/uploads/b3afdaacc8172010061b167013680e71/image.png) <br />
+
+##### 1. 회원 정보 등록
+##### 2. 회원 정보 수정
+##### 3. 회원 정보 삭제
+##### 4. 회원 정보 검색
+##### 5. 로그인/로그아웃
 
 
+#### 관광지 정보 관리
+![image](/uploads/0d9202ef4c93e9f6d885a67f547d152a/image.png)
 
-## Getting started
+##### 1. 전체검색
+![image](/uploads/7c251e30ab6972b55b4e8326a78a0e04/image.png)
+파라미터를 전혀 넘기지 않고 검색을 할 경우 전체 검색이 됩니다.
+![image](/uploads/c8bda42362ee93bae18efcea54907b14/image.png)
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+##### 2. 상세 조회
+![image](/uploads/c8bda42362ee93bae18efcea54907b14/image.png)
+table 구조를 수정하여 상세 설명(overview)도 한 테이블에 있게 함으로써 상세조회가 가능하게 했습니다.
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+##### 3. 지역별 조회
+![image](/uploads/f66085a3ac84c28382aee1468f7214eb/image.png)
+![image](/uploads/4e60363d4d93be165558a0190d5422f5/image.png)
+![image](/uploads/f056db29c6f5ee0f45f76dca4ac02b8f/image.png)
+(서울 : 1, 강동구 : 2, 관광지 타입: 입력 x (전체 조회))
+![image](/uploads/403f56a9f1f041e09be0ad8b458df0ca/image.png)
 
-## Add your files
+##### 4. 관광지 종류별 조회
+![image](/uploads/59185c67b23ad1605287eade84ff2590/image.png)
+(모든 지역의 음식점 조회)
+![image](/uploads/627da20955dba535ce67623e04116729/image.png)
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
-
-```
-cd existing_repo
-git remote add origin https://lab.ssafy.com/crm03008/EnjoyTrip_SpringBoot_Seoul13_Team9.git
-git branch -M master
-git push -uf origin master
-```
-
-## Integrate with your tools
-
-- [ ] [Set up project integrations](https://lab.ssafy.com/crm03008/EnjoyTrip_SpringBoot_Seoul13_Team9/-/settings/integrations)
-
-## Collaborate with your team
-
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+##### 5. 관광지 검색
+검색어가 포함되는 주소, 이름에 해당하는 관광지를 출력합니다.
+![image](/uploads/8f0f8037729e8e95079839bbb547ffe3/image.png)
+![image](/uploads/7f3ef2bac59e810f86bdda0eeead3cff/image.png)
