@@ -25,7 +25,7 @@
 	</select>
 	
 	<select id="login" parameterType="String" resultType="Member">
-		select member_id, member_eamil, member_name, sido_code, gugun_code, member_photo, member_birthdate, member_gender, member_phone, member_role
+		select member_id, member_email, member_name, sido_code, gugun_code, member_photo, member_birthdate, member_gender, member_phone, member_role
 		from members
 		where member_id=#{memberId} and  member_password=#{memberPassword}
 	</select>
