@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    
+<!-- namespace에는 Dao의 패키지명 포함한 인터페이스명과 동일하게 선언해야 
+	 mybatis-spring이 Dao에 대한 구현체를 자동으로 생성한다.
+-->
+<mapper namespace="com.ssafy.tripoline.board.model.dao.BoardDao">    <!--  <== 페키지명만 쓰고 인터페이스명을 안쓰면 오류!!!! 자주하는 실수중 하나임 -->
+<!-- 사용가능한 태그명 <insert> <delete> <select> <update> executeUpdate 되는건 동일하지만 구분을 위해서 사용 -->
+<!-- parameter타입으로는 1개만 올 수 있음, 여러개를 사용하고싶다면 Dto를 만들거나 Map을 사용해야함 
+	 데이터가 1개일때는 바로써도 되지만 일반적으로 매핑시 #{속성명} 사용  
+-->
+
+	<select id="getArticle" parameterType="String" resultType="Article">
+		select *
+		from articles
+		where article_id = #{articleId}
+	</select>
+
+	<select id="searchAll" parameterType="PageBean" resultType="Article">
+		select *
+		from articles
+		order by articleId 
+	</select>
+
+	<select id="totalCount" parameterType="PageBean" resultType="int">
+		select count(*)
+		from articles
+	</select>
+	
+	<select id="BestTotalCount" parameterType="PageBean" resultType="int">
+		select count(*)
+		from articles
+		where hit > 0 or hit > 0 
+	</select>
+	
+	<select id="categoryCount" parameterType="PageBean" resultType="int">
+		select count(*)
+		from articles
+		where category_id = #{categoryId}
+	</select>
+	
+	<select id="categorySearch" parameterType="PageBean" resultType="Article">
+		select *
+		from articles
+		where category_id = #{categoryId}
+		order by articleId desc
+	</select>
+	
+	<select id="getBestAll" parameterType="PageBean" resultType="Article">
+		select *
+		from articles
+		where hit > 0 or hit > 0 	
+		order by articleId desc
+	</select>
+	
+	<insert id="write" parameterType="Article">
+		insert into articles (article_id, article_title, article_content, member_id, member_name, like, hit, register_time, update_time, category_id, image
+		values (#{articleId}, #{articleTitle}, #{articleContent}, #{memberId}, #{memberName}, 0, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, #{categoryId}, #{image})
+	</insert>
+	
+	<update id="updateHit" parameterType="int">
+		update articles set hit = hit+1
+		where article_id = #{articleId}
+	</update>
+	
+	<update id="updatelike" parameterType="int">
+		update articles set like = like+1
+		where article_id = #{articleId}
+	</update>
+	
+	<update id="update" parameterType="Article">
+		update articles set article_id=#{articleId}, article_title=#{articleTitle}, article_content=#{articleContent}, member_id=#{memberId}, member_name=#{memberName}, like=#{like}, hit=#{hit}, register_time=#{registerTime}, update_time=CURRENT_TIMESTAMP, category_id=#{categoryId}, image = #{image}
+		where article_id = #{articleId}
+	</update>
+	
+	<delete id="remove" parameterType="int">
+		delete from articles
+		where article_id = #{articleId}
+	</delete>
+	
+</mapper>    
+    
+    
