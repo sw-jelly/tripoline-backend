@@ -34,11 +34,36 @@
 ![image](/uploads/b3afdaacc8172010061b167013680e71/image.png) <br />
 
 ##### 1. 회원 정보 등록
-##### 2. 회원 정보 수정
-##### 3. 회원 정보 삭제
-##### 4. 회원 정보 검색
-##### 5. 로그인/로그아웃
+![image](/uploads/f987e0d61f225b2216c9b0b30f465589/image.png)
+![image](/uploads/c0b4ec9faf19faa996cbf50894bbe1c4/image.png)
+![image](/uploads/02767ea2dac64abd179d90cec91486c3/image.png)
 
+##### 2. 회원 정보 수정
+![image](/uploads/392035660615dedb9c01cff87c0f3ec8/image.png)
+(전화번호 010-1234-5678 -> 010-4321-9876)
+![image](/uploads/e9fe2a98f225231e97694cd397e61d36/image.png)
+![image](/uploads/a7e7335e64bbf9d2065d3609578f0884/image.png)
+
+##### 3. 회원 정보 삭제
+![image](/uploads/500abee23c5ab50350a7a141297491bf/image.png)
+![image](/uploads/4747d86132b00ea1d9ea65e5caabf214/image.png)
+![image](/uploads/5ac3bc60779d18e0c28ca4a8467234df/image.png)
+
+##### 4. 회원 정보 검색
+![image](/uploads/8c3da6250be11677c38eabd19a6b8465/image.png)
+![image](/uploads/f01c7fd9b7839a5c1b4b49bc0e1c5da7/image.png)
+
+##### 5. 로그인/로그아웃
+- 로그인 성공
+![image](/uploads/895c0fd4a94d15a0e37a01f26b336357/image.png)
+![image](/uploads/93d82558f3fa7fcf2c49fb0b7354edbe/image.png)
+
+- 로그인 실패
+![image](/uploads/f07ee1afcdf1205c9dfaea2ebaf31b4c/image.png)
+
+- 로그아웃
+![image](/uploads/5ddcb0bc1b431bb6c0064ec069b1c227/image.png)
+![image](/uploads/d201a4877c37dc773adfb70cc33fce48/image.png)
 
 #### 관광지 정보 관리
 ![image](/uploads/0d9202ef4c93e9f6d885a67f547d152a/image.png)
