@@ -96,6 +96,7 @@ CREATE TABLE IF NOT EXISTS `tripoline`.`articles` (
   `register_time` TIMESTAMP NULL DEFAULT current_timestamp,
   `update_time` TIMESTAMP NULL DEFAULT current_timestamp,
   `category_id` INT NULL,
+  `image` VARCHAR(200) NULL,
   PRIMARY KEY (`article_id`),
   INDEX `fk_members_articles_idx` (`member_id` ASC) VISIBLE,
   INDEX `fk_categories_articles_idx` (`category_id` ASC) VISIBLE,
