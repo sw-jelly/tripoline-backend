@@ -50,15 +50,13 @@
 		from attraction_info
 		<where>
 			<if test="sidoCode != 0">
-				sido_code = #{sidoCode}
+				and sido_code = #{sidoCode}
 			</if>
 			<if test="gugunCode != 0">
-				<if test="sidoCode != 0"> and </if>
-				gugun_code = #{gugunCode}
+				and gugun_code = #{gugunCode}
 			</if>
 			<if test="contentTypeId != 0">
-				<if test="sidoCode != 0 or gugunCode != 0"> and </if>
-				content_type_id = #{contentTypeId}
+				and content_type_id = #{contentTypeId}
 			</if>
 		</where>
 	</select>
