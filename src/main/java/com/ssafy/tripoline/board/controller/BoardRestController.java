@@ -174,8 +174,8 @@ public class BoardRestController {
 		logger.debug("Article.regist.............. article:{}", article);
 		try {
 			boardService.write(article);
-
 		} catch (Exception e) {
+			e.printStackTrace();
 			return new ResponseEntity<String>("처리 중 오류가 발생하였습니다", HttpStatus.BAD_REQUEST);
 		}
 		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);

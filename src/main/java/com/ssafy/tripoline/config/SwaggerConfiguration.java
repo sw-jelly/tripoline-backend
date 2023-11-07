@@ -33,6 +33,8 @@ public class SwaggerConfiguration {
 	public SwaggerConfiguration() {
 		System.out.println("SwaggerConfiguration load...................");
 	}
+	
+	
 	@Bean
 	public Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2).consumes(getConsumeContentTypes()).produces(getProduceContentTypes())

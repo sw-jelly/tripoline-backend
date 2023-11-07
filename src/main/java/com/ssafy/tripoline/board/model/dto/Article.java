@@ -11,10 +11,9 @@ import lombok.NonNull;
 public class Article implements Serializable {
 	@ApiParam(value="게시글 번호", required=true)
 	@NonNull // 필수속성 지정 
-	private String articleId;
+	private int articleId;
 	
-	@NonNull // 필수속성 지정 
-	@ApiParam(value="게시글 제목", required=true)
+	@ApiParam(value="게시글 제목")
 	private String articleTitle;
 	
 	@ApiParam(value="게시글 내용")
@@ -24,7 +23,7 @@ public class Article implements Serializable {
 	private String memberId;
 	
 	@ApiParam(value="작성자 이름")
-	private int memberName;
+	private String memberName;
 	
 	@ApiParam(value="게시글 좋아요 수")
 	private int like;

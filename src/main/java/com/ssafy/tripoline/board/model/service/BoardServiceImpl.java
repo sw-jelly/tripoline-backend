@@ -84,8 +84,9 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public void write(Article article) {
+		System.out.println("입력된 article...." + article);
 		try {
-			Article find = dao.getArticle(article.getCategoryId());
+			Article find = dao.getArticle(article.getArticleId());
 			if(find!=null)
 				throw new BoardException("이미 등록된 게시글 입니다.");
 			
