@@ -13,7 +13,7 @@ import com.ssafy.tripoline.board.model.dto.PageBean;
 public interface BoardDao {
 	
 	public List<Article> searchAll(PageBean bean) throws SQLException; // 게시글 검색 
-	public List<Article> categorySearch(PageBean bean) throws SQLException; // 카테고리로 글 검색하
+	public List<Article> searchByCategory(Map<String, Object> paramMap) throws SQLException; // 카테고리로 글 검색하
 	public int categoryCount(PageBean bean) throws SQLException; // 카테고리에 해당하는 글 갯수 가져오
 	public int totalCount(PageBean bean) throws SQLException; // 총 게시글 수 가져오기 
 	public Article getArticle(int articleId) throws SQLException; // 게시글 상세정보 가져오기 

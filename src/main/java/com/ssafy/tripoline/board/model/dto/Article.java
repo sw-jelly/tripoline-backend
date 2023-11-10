@@ -26,10 +26,10 @@ public class Article implements Serializable {
 	private String memberName;
 	
 	@ApiParam(value="게시글 좋아요 수")
-	private int like;
+	private int likeCount;
 	
 	@ApiParam(value="게시글 조회 수")
-	private int hit;
+	private int viewCount;
 	
 	@ApiParam(value="게시글 등록일자")
 	private Date registerTime;

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.tripoline.board.model.dto.Article;
@@ -74,13 +75,13 @@ public class BoardRestController {
 	}
 
 	@ApiOperation(value = "카테고리별 게시글 목록 조회", notes = "카테고리(categoryId)에 해당하는 게시글 리스트 조회")
-	@GetMapping("/searchby?{categoryId}")
-	public ResponseEntity<?> searchByCategory(PageBean bean) {
+	@GetMapping("/searchby/{categoryId}")
+	public ResponseEntity<?> searchByCategory(PageBean bean, @RequestParam int categoryId) {
 		logger.debug("board.categorysearchAll............bean:{}", bean);
 		List<Article> articles = null;
 
 		try {
-			articles = boardService.categorySearch(bean);
+			articles = boardService.searchByCategory(bean, categoryId);
 
 		} catch (Exception e) {
 			return new ResponseEntity<String>("처리 중 오류가 발생하였습니다", HttpStatus.BAD_REQUEST);

@@ -12,6 +12,20 @@
 	 데이터가 1개일때는 바로써도 되지만 일반적으로 매핑시 #{속성명} 사용  
 -->
 
+	<resultMap type="Article" id="ArticleDto">
+		<id column="article_id" property="articleId" />
+		<result column="article_title" property="articleTitle"/>
+		<result column="article_content" property="articleContent"/>
+		<result column="member_id" property="memberId"/>
+		<result column="member_name" property="memberName"/>
+		<result column="like_count" property="likeCount"/>
+		<result column="view_count" property="viewCount"/>
+		<result column="register_time" property="registerTime"/>
+		<result column="update_time" property="updateTime"/>
+		<result column="category_id" property="categoryId"/>
+		<result column="image" property="image"/>
+	</resultMap>
+
 	<select id="getArticle" parameterType="int" resultType="Article">
 		select *
 		from articles
@@ -41,11 +55,12 @@
 		where category_id = 1
 	</select>
 	
-	<select id="categorySearch" parameterType="PageBean" resultType="Article">
+	<select id="searchByCategory" parameterType="java.util.Map" resultMap="ArticleDto">
 		select *
 		from articles
-		where category_id = 1
-		order by article_id 
+		where category_id = #{categoryId}
+		order by article_id
+		limit #{bean.start}, #{bean.interval}
 	</select>
 	
 	<select id="getBestAll" parameterType="PageBean" resultType="Article">

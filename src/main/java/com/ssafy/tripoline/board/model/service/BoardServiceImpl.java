@@ -1,9 +1,12 @@
 package com.ssafy.tripoline.board.model.service;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.ssafy.tripoline.board.model.dao.BoardDao;
 import com.ssafy.tripoline.board.model.dto.Article;
@@ -35,13 +38,16 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<Article> categorySearch(PageBean bean) {
+	public List<Article> searchByCategory(PageBean bean, @PathVariable int categoryId) {
 		System.out.println("게시글 searchAll 수행 중...............");
 		try {
 			int total = dao.categoryCount(bean);
+			Map<String, Object> paramMap = new HashMap<>();
+			paramMap.put("bean", bean);
+			paramMap.put("categoryId", categoryId);
 			PageUtility page = new PageUtility(bean.getInterval(), total, bean.getPageNo(), null);
 			bean.setPageLink(page.getPageBar());
-			return dao.categorySearch(bean);
+			return dao.searchByCategory(paramMap);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new BoardException("카테고리 게시 목록 정보 조회 중 오류 발생");
