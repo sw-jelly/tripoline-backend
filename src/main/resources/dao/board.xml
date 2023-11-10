@@ -81,7 +81,7 @@
 	</select>
 
 
-	<select id="getArticle" parameterType="int" resultType="Article">
+	<select id="getArticle" parameterType="int" resultMap="ArticleDto">
 		select *
 		from articles
 		where article_id = #{articleId}
@@ -150,14 +150,14 @@
 
 
 	<update id="updateHit" parameterType="int">
-		update articles set hit =
-		hit+1
+		update articles set hit_count =
+		hit_count+1
 		where article_id = #{articleId}
 	</update>
 
 	<update id="updatelike" parameterType="int">
-		update articles set like =
-		like+1
+		update articles set like_count =
+		like_count+1
 		where article_id = #{articleId}
 	</update>
 
