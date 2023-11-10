@@ -9,8 +9,7 @@ import lombok.NonNull;
 
 @Data
 public class Article implements Serializable {
-	@ApiParam(value="게시글 번호", required=true)
-	@NonNull // 필수속성 지정 
+	@ApiParam(value="게시글 번호")
 	private int articleId;
 	
 	@ApiParam(value="게시글 제목")

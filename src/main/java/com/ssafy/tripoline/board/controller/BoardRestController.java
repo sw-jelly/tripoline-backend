@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,7 +29,7 @@ import com.ssafy.tripoline.board.model.service.BoardService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+
 
 @RestController
 @RequestMapping("/boardRest")
@@ -45,6 +46,27 @@ public class BoardRestController {
 
 	private static final String SUCCESS = "success";
 
+	
+	
+	
+	
+	@ApiOperation(value = "게시글 정보 등록", notes = "게시글 정보를 등록한다.")
+	@ApiResponse(code = 200, message = "success")
+	@PostMapping
+	public ResponseEntity<?> regist(@RequestBody Article article) {
+		
+		logger.debug("Article.regist.............. article:{}", article);
+		try {
+			boardService.write(article);
+			return new ResponseEntity<Void>(HttpStatus.CREATED);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>("처리 중 오류가 발생하였습니다", HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	
 	@ApiOperation(value = "전체 게시글 목록 조회", notes = "전체 게시글을 조회하는 API")
 	/**
 	 * ResponseEntity 응답 코드 + 응답 데이터를 전송하기 위한 객체
@@ -59,6 +81,7 @@ public class BoardRestController {
 		try {
 			articles = boardService.searchAll(bean);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return new ResponseEntity<String>("처리 중 오류가 발생하였습니다", HttpStatus.BAD_REQUEST);
 		}
 		logger.debug("board.searchAll............bean:{}", articles);
@@ -168,19 +191,7 @@ public class BoardRestController {
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}
 
-	@ApiOperation(value = "게시글 정보 등록", notes = "게시글 정보를 등록한다.")
-	@ApiResponse(code = 200, message = "success")
-	@PostMapping
-	public ResponseEntity<String> regist(@RequestBody Article article) {
-		logger.debug("Article.regist.............. article:{}", article);
-		try {
-			boardService.write(article);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new ResponseEntity<String>("처리 중 오류가 발생하였습니다", HttpStatus.BAD_REQUEST);
-		}
-		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
-	}
+
 
 	@ApiOperation(value = "게시글 정보 수정", notes = "게시글 정보를 수정 한다.")
 	@ApiResponse(code = 200, message = "success")
