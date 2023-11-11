@@ -30,6 +30,7 @@ public class BoardServiceImpl implements BoardService {
 			int total = dao.totalCount(bean);
 			PageUtility page = new PageUtility(bean.getInterval(), total, bean.getPageNo(), null);
 			bean.setPageLink(page.getPageBar());
+			bean.setTotal(total);
 			return dao.searchAll(bean);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -58,11 +59,11 @@ public class BoardServiceImpl implements BoardService {
 	public Article getArticle(int articleId) {
 		try {
 			Article article = dao.getArticle(articleId);
+			
 			if(article == null) {
 				throw new BoardException("게시글 정보가 존재하지 않니다.");
 			}
 			dao.updateHit(articleId); // 조회수 반영
-			
 			return article;
 		} catch (SQLException e) {
 			throw new BoardException("게시글 조회 중 오류 발생");
@@ -110,6 +111,8 @@ public class BoardServiceImpl implements BoardService {
 			int total = dao.BestTotalCount(bean);
 			PageUtility page = new PageUtility(bean.getInterval(), total, bean.getPageNo(), null);
 			bean.setPageLink(page.getPageBar());
+			bean.setTotal(total);
+			
 			return dao.getBestAll(bean);
 		} catch (SQLException e) {
 			e.printStackTrace();

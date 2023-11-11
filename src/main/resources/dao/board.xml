@@ -36,7 +36,7 @@
 		(article_title, article_content, member_id,
 		member_name,
 		like_count, hit_count, register_time, update_time,
-		category_id, img)
+		category_id, image)
 		values (#{articleTitle}, #{articleContent}, #{memberId},
 		#{memberName}, 0, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,
 		#{categoryId}, #{image})
@@ -57,6 +57,8 @@
 	  		</choose>
 	  	</if>
 	  </sql>
+	  
+	  
 
 	<select id="searchAll" parameterType="PageBean"
 		resultMap="ArticleDto">
@@ -93,41 +95,46 @@
 		resultType="int">
 		select count(article_id)
 		from articles
+	    where hit_count >= 1 or like_count >= 1
 		<where>
 			<include refid="searchCon"></include>
-			and (hit_count >= 0 or like_count >= 0)
 		</where>
 	</select>
 
 	<select id="getBestAll" parameterType="PageBean"
-		resultType="Article">
+		resultMap="ArticleDto">
 		select *
 		from articles
+		where hit_count >= 1 or like_count >= 1
 		<where>
 			<include refid="searchCon"></include>
-			and hit_count >= 0 or like_count >= 0
 		</where>
-		order by article_id
+		order by article_id desc
 	</select>
 
 
 
-	<select id="categoryCount" parameterType="PageBean"
+	<select id="categoryCount" parameterType="java.util.Map"
 		resultType="int">
-		select count(*)
+		select count(article_id)
 		from articles
-		where category_id =
-		${categoryId}
+		where category_id=#{categoryId}
+		<where>
+			<include refid="searchCon"></include>
+		</where>
 	</select>
 
 	<select id="searchByCategory" parameterType="java.util.Map"
 		resultMap="ArticleDto">
 		select *
 		from articles
-		where category_id = #{categoryId}
+		where category_id=#{categoryId}
+		<where>
+		<include refid="searchCon"></include>
+		</where>
 		order
 		by article_id
-		limit #{bean.start}, #{bean.interval}
+		limit #{start}, #{interval}
 	</select>
 
 

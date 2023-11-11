@@ -14,17 +14,18 @@ public class PageBean implements Serializable{
 	private String word;
 	/**페이징 처리에 대한 link정보*/
 	private String pageLink;
-	/**현재 페이지 번호*/
 	
+	/**현재 페이지 번호*/
 	@ApiParam(value="페이지 번호", required = true)
 	private int pageNo;
 	
 	@ApiParam(value="전체 데이타 개수")
 	private int total;
+
 	
 	
 	/**한 페이지에 보여주 content 개수*/
-	private int interval = 3;
+	private int interval = 5;
 	/**페이지 시작 번호*/
 	private int start=0;
 	public PageBean() {	}
@@ -32,12 +33,14 @@ public class PageBean implements Serializable{
 		setKey(key);
 		setWord(word);
 		setPageNo(pageNo);
+
 	}
 	public PageBean(String key, String word, String pageNo) {
 		setKey(key);
 		setWord(word);
 		setPageNo(pageNo);
 	}
+	
 	private void setPageNo(String pageNo) {
 		System.out.println("###########################################setPageNo(String)");
 		try {
@@ -76,6 +79,8 @@ public class PageBean implements Serializable{
 	public void setPageLink(String pageLink) {
 		this.pageLink = pageLink;
 	}
+	
+	
 	public int getPageNo() {
 		if(pageNo ==0) {
 			return 1;

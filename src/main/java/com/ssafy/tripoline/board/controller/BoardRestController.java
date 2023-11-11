@@ -99,7 +99,7 @@ public class BoardRestController {
 
 	@ApiOperation(value = "카테고리별 게시글 목록 조회", notes = "카테고리(categoryId)에 해당하는 게시글 리스트 조회")
 	@GetMapping("/searchby/{categoryId}")
-	public ResponseEntity<?> searchByCategory(PageBean bean, @RequestParam int categoryId) {
+	public ResponseEntity<?> searchByCategory( PageBean bean, @PathVariable int categoryId) {
 		logger.debug("board.categorysearchAll............bean:{}", bean);
 		List<Article> articles = null;
 
@@ -111,6 +111,8 @@ public class BoardRestController {
 		}
 		logger.debug("board.categorysearchAll............bean:{}", articles);
 		logger.debug("board.categorysearchAll............bean:{}", bean);
+		
+		
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("articles", articles);
 		result.put("page", bean);
@@ -147,7 +149,7 @@ public class BoardRestController {
 
 	// 충돌방지를 위해 pathVariable로 param을 전달, pathVariable로 주는 데이터는 생략 불가
 	@ApiOperation(value = "articleId에 해당하는 게시글 상세 정보 조회", notes = "articleId에 해당하는 게시글 정보 조회")
-	@GetMapping("/{articleId}}")
+	@GetMapping("/{articleId}")
 	public ResponseEntity<?> search(@PathVariable int articleId) {
 		logger.debug("board.search............ articleId:{}", articleId);
 		Article article = null;
