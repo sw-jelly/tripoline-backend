@@ -18,11 +18,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.tripoline.board.model.dto.Article;
 import com.ssafy.tripoline.board.model.dto.BoardException;
+import com.ssafy.tripoline.board.model.dto.Comment;
 import com.ssafy.tripoline.board.model.dto.PageBean;
 import com.ssafy.tripoline.board.model.service.BoardService;
 
@@ -193,7 +194,44 @@ public class BoardRestController {
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}
 
+	@ResponseBody
+	@ApiOperation(value = "articleId에 해당하는 게시글의 댓글 조회", notes = "articleId에 해당하는 게시글 댓글 조회")
+	@GetMapping("/comments/{articleId}")
+	public ResponseEntity<?> getComments(@PathVariable int articleId) {
+		logger.debug("getComments.................articleId : {}", articleId);
+		List<Comment> comments;
+		
+		try {
+			comments = boardService.getCommentsByArticleId(articleId);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			return new ResponseEntity<String>("처리 중 오류가 발생하였습니다", HttpStatus.BAD_REQUEST);
+		}
+		
+		logger.debug("board.search............ comments:{}", comments);
 
+		if (comments != null) {
+			return new ResponseEntity<List<Comment>>(comments, HttpStatus.OK);
+		}
+		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+	}
+	
+	@ApiOperation(value = "댓글 등록", notes = "댓글을 등록한다.")
+	@ApiResponse(code = 200, message = "success")
+	@PostMapping("/comments")
+	@ResponseBody
+	public ResponseEntity<?> registComment(@RequestBody Comment comment) {
+		
+		logger.debug("Article.regist.............. comment:{}", comment);
+		try {
+			boardService.writeComment(comment);
+			return new ResponseEntity<Void>(HttpStatus.CREATED);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>("처리 중 오류가 발생하였습니다", HttpStatus.BAD_REQUEST);
+		}
+	}
 
 	@ApiOperation(value = "게시글 정보 수정", notes = "게시글 정보를 수정 한다.")
 	@ApiResponse(code = 200, message = "success")
