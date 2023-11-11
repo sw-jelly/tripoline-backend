@@ -92,18 +92,14 @@
 		<where>
 			<include refid="searchCon"></include>
 		</where>
-		order by article_id desc limit #{start}, #{interval}
-
+		order by article_id desc
 	</select>
 
-	<select id="categoryCount" parameterType="java.util.Map"
+	<select id="categoryCount" parameterType="int"
 		resultType="int">
-		select count(article_id)
+		select count(*)
 		from articles
 		where category_id=#{categoryId}
-		<where>
-			<include refid="searchCon"></include>
-		</where>
 	</select>
 
 	<select id="searchByCategory" parameterType="java.util.Map"
@@ -115,7 +111,7 @@
 			<include refid="searchCon"></include>
 		</where>
 		order by article_id
-		limit #{start}, #{interval}
+		limit #{bean.start}, #{bean.interval}
 	</select>
 
 	<select id="getCommentsByArticleId" parameterType="int"

@@ -19,7 +19,7 @@ public interface BoardDao {
 
 	public List<Article> searchByCategory(Map<String, Object> paramMap) throws SQLException; // 카테고리로 글 검색하기
 
-	public int categoryCount(PageBean bean) throws SQLException; // 카테고리에 해당하는 글 갯수 가져오기
+	public int categoryCount(int categoryId) throws SQLException; // 카테고리에 해당하는 글 갯수 가져오기
 
 	public Article getArticle(int articleId) throws SQLException; // 게시글 상세정보 가져오기
 

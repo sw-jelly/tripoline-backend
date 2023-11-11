@@ -15,6 +15,8 @@ import com.ssafy.tripoline.board.model.dto.Comment;
 import com.ssafy.tripoline.board.model.dto.PageBean;
 import com.ssafy.tripoline.util.PageUtility;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
 public class BoardServiceImpl implements BoardService {
 
@@ -41,12 +43,12 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public List<Article> searchByCategory(PageBean bean, @PathVariable int categoryId) {
-		System.out.println("게시글 searchAll 수행 중...............");
+		System.out.println("게시글 searchByCategory 수행 중...............");
 		try {
-			int total = dao.categoryCount(bean);
+			int total = dao.categoryCount(categoryId);
 			Map<String, Object> paramMap = new HashMap<>();
-			paramMap.put("bean", bean);
 			paramMap.put("categoryId", categoryId);
+			paramMap.put("bean", bean);
 			PageUtility page = new PageUtility(bean.getInterval(), total, bean.getPageNo(), null);
 			bean.setPageLink(page.getPageBar());
 			return dao.searchByCategory(paramMap);
