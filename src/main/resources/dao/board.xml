@@ -120,10 +120,10 @@
 	<select id="getCommentsByArticleId" parameterType="int"
 		resultType="Comment">
 		select comment_id as commentId, content, c.register_time as registerTime,
-			   a.article_id as articleId,
-			   m.member_id as memberId, m.member_name as memberName
+				a.article_id as articleId,
+				m.member_id as memberId, m.member_name as memberName
 		from comments c, members m, articles a
-		where c.article_id = #{articleId} and m.member_id = c.member_id;
+		where c.article_id = a.article_id and c.article_id = 4 and m.member_id = c.member_id;
 	</select>
 
 	<insert id="writeComment" parameterType="Comment">
