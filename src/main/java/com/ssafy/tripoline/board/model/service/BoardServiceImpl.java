@@ -51,6 +51,8 @@ public class BoardServiceImpl implements BoardService {
 			paramMap.put("bean", bean);
 			PageUtility page = new PageUtility(bean.getInterval(), total, bean.getPageNo(), null);
 			bean.setPageLink(page.getPageBar());
+			bean.setTotal(total);
+
 			return dao.searchByCategory(paramMap);
 		} catch (SQLException e) {
 			e.printStackTrace();

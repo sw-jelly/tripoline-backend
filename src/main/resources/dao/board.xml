@@ -92,7 +92,7 @@
 		<where>
 			<include refid="searchCon"></include>
 		</where>
-		order by article_id desc
+		order by article_id desc limit #{start}, #{interval}
 	</select>
 
 	<select id="categoryCount" parameterType="int"
