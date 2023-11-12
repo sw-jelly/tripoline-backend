@@ -155,4 +155,28 @@ public class BoardServiceImpl implements BoardService {
 		}
 	}
 
+	@Override
+	public void updateComment(Comment comment) {
+		try {
+			Comment find = dao.getCommentById(comment.getCommentId());
+			if (find == null) throw new BoardException("존재하지 않는 댓글입니다.");
+			dao.updateComment(comment);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new BoardException("댓글 수정 중 오류 발생");
+		}
+	}
+
+	@Override
+	public void deleteComment(int commentId) {
+		try {
+			Comment find = dao.getCommentById(commentId);
+			if (find == null) throw new BoardException("존재하지 않는 댓글입니다.");
+			dao.deleteComment(commentId);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new BoardException("댓글 삭제 중 오류 발생");
+		}
+	}
+
 }
