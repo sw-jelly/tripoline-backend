@@ -77,8 +77,8 @@
 		resultType="int">
 		select count(article_id)
 		from articles
-		where view_count >= 1 or
-		like_count >= 1
+		where view_count >= 20 or
+		like_count >= 6
 		<where>
 			<include refid="searchCon"></include>
 		</where>
@@ -88,7 +88,7 @@
 		resultMap="ArticleDto">
 		select *
 		from articles
-		where view_count >= 1 or like_count >= 1
+		where view_count >= 20 or like_count >= 6
 		<where>
 			<include refid="searchCon"></include>
 		</where>
@@ -141,7 +141,7 @@
 		where article_id = #{articleId}
 	</update>
 
-	<update id="updatelike" parameterType="int">
+	<update id="updateLike" parameterType="int">
 		update articles set like_count = like_count + 1
 		where article_id = #{articleId}
 	</update>

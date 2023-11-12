@@ -130,7 +130,6 @@ public class BoardServiceImpl implements BoardService {
 			if (find == null)
 				throw new BoardException("게시글 정보를 찾을 수 없습니다.");
 			dao.updateLike(articleId);
-			dao.getArticle(articleId); // 좋아요가 반영된 게시글 정보를 가져온다
 		} catch (SQLException e) {
 			throw new BoardException("게시 정보 등록 중 오류 발생");
 		}

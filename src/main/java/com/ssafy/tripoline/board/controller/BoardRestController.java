@@ -170,26 +170,12 @@ public class BoardRestController {
 	@ApiOperation(value = "게시글 좋아요", notes = "articleId에 해당하는 게시글의 좋아요를 증가시키는 api")
 	@PutMapping("/{articleId}")
 	public ResponseEntity<?> like(@PathVariable int articleId) {
-		logger.debug("board.search............ articleId:{}", articleId);
-		Article article = null;
-		try {
-			article = boardService.getArticle(articleId);
-		} catch (Exception e) {
-			return new ResponseEntity<String>("처리 중 오류가 발생하였습니다", HttpStatus.BAD_REQUEST);
-		}
-		logger.debug("board.search............ board:{}", article);
-		if (article != null) {
 			try {
 				boardService.updateLike(articleId);
-
 			} catch (Exception e) {
 				return new ResponseEntity<String>("처리 중 오류가 발생하였습니다", HttpStatus.BAD_REQUEST);
-
 			}
-			return new ResponseEntity<Article>(article, HttpStatus.OK);
-		}
-
-		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+			return new ResponseEntity<String>("좋아요 완료", HttpStatus.OK);
 	}
 
 	@ResponseBody
