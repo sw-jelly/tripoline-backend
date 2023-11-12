@@ -178,6 +178,36 @@ public class BoardRestController {
 			return new ResponseEntity<String>("좋아요 완료", HttpStatus.OK);
 	}
 
+	
+
+	@ApiOperation(value = "게시글 정보 수정", notes = "게시글 정보를 수정 한다.")
+	@ApiResponse(code = 200, message = "success")
+	@PutMapping
+	public ResponseEntity<String> update(@RequestBody Article article) {
+		logger.debug("Article.update.............. article:{}", article);
+		try {
+			boardService.update(article);
+
+		} catch (Exception e) {
+			return new ResponseEntity<String>("처리 중 오류가 발생하였습니다", HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+	}
+
+	@ApiOperation(value = "게시글 정보 삭제", notes = "게시글 정보를 삭제 한다.")
+	@ApiResponse(code = 200, message = "success")
+	@DeleteMapping("/{articleId}")
+	public ResponseEntity<String> remove(@PathVariable int articleId) {
+		logger.debug("Book.delete.............. articleId:{}", articleId);
+		try {
+			boardService.remove(articleId);
+
+		} catch (Exception e) {
+			return new ResponseEntity<String>("처리 중 오류가 발생하였습니다", HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+	}
+	
 	@ResponseBody
 	@ApiOperation(value = "articleId에 해당하는 게시글의 댓글 조회", notes = "articleId에 해당하는 게시글 댓글 조회")
 	@GetMapping("/comments/{articleId}")
@@ -205,7 +235,6 @@ public class BoardRestController {
 	@PostMapping("/comments")
 	@ResponseBody
 	public ResponseEntity<?> registComment(@RequestBody Comment comment) {
-		
 		logger.debug("Article.regist.............. comment:{}", comment);
 		try {
 			boardService.writeComment(comment);
@@ -216,30 +245,31 @@ public class BoardRestController {
 			return new ResponseEntity<String>("처리 중 오류가 발생하였습니다", HttpStatus.BAD_REQUEST);
 		}
 	}
-
-	@ApiOperation(value = "게시글 정보 수정", notes = "게시글 정보를 수정 한다.")
+	
+	@ApiOperation(value = "댓글 수정", notes = "댓글을 수정 한다.")
 	@ApiResponse(code = 200, message = "success")
-	@PutMapping
-	public ResponseEntity<String> update(@RequestBody Article article) {
-		logger.debug("Article.update.............. article:{}", article);
+	@PutMapping("/comments")
+	public ResponseEntity<String> updateComment(@RequestBody Comment comment) {
+		logger.debug("Article.updateComment.............. comment:{}", comment);
 		try {
-			boardService.update(article);
+			boardService.updateComment(comment);
 
 		} catch (Exception e) {
+			logger.error(e.getMessage());
 			return new ResponseEntity<String>("처리 중 오류가 발생하였습니다", HttpStatus.BAD_REQUEST);
 		}
 		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "게시글 정보 삭제", notes = "게시글 정보를 삭제 한다.")
+	@ApiOperation(value = "댓글 삭제", notes = "댓글을 삭제 한다.")
 	@ApiResponse(code = 200, message = "success")
-	@DeleteMapping("/{articleId}")
-	public ResponseEntity<String> remove(@PathVariable int articleId) {
-		logger.debug("Book.delete.............. articleId:{}", articleId);
+	@DeleteMapping("/comments/{commentId}")
+	public ResponseEntity<String> removeComment(@PathVariable int commentId) {
+		logger.debug("Book.removeComment.............. commentId:{}", commentId);
 		try {
-			boardService.remove(articleId);
-
+			boardService.deleteComment(commentId);
 		} catch (Exception e) {
+			logger.error(e.getMessage());
 			return new ResponseEntity<String>("처리 중 오류가 발생하였습니다", HttpStatus.BAD_REQUEST);
 		}
 		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);

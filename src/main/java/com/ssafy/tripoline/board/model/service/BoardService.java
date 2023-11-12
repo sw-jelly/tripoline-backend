@@ -24,8 +24,11 @@ public interface BoardService {
 
 	public void updateLike(int articleId); // 게시글 좋아요
 
-	public List<Comment> getCommentsByArticleId(int articleId); // 댓글 가져오기
+	public List<Comment> getCommentsByArticleId(int articleId); // 게시물의 댓글 목록 가져오기
 	
 	public void writeComment(Comment comment); // 댓글 작성하기
+	
+	public void updateComment(Comment comment); // 댓글 수정하기
 
+	public void deleteComment(int commentId); // 댓글 삭제하기
 }

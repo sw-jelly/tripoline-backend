@@ -37,8 +37,13 @@ public interface BoardDao {
 
 	public void updateHit(int articleId) throws SQLException; // 조회수 반영
 
-	public List<Comment> getCommentsByArticleId(int articleId) throws SQLException; // 댓글 가져오기
+	public List<Comment> getCommentsByArticleId(int articleId) throws SQLException; // 게시물의 댓글 목록 가져오기
+	
+	public Comment getCommentById(int commentId) throws SQLException; // 댓글 가져오기
 	
 	public void writeComment(Comment comment) throws SQLException; // 댓글 작성하기
+	
+	public void updateComment(Comment comment) throws SQLException; // 댓글 수정하기
 
+	public void deleteComment(int commentId) throws SQLException; // 댓글 삭제하기
 }

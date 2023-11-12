@@ -114,20 +114,6 @@
 		limit #{bean.start}, #{bean.interval}
 	</select>
 
-	<select id="getCommentsByArticleId" parameterType="int"
-		resultType="Comment">
-		select comment_id as commentId, content, c.register_time as registerTime,
-				a.article_id as articleId,
-				m.member_id as memberId, m.member_name as memberName
-		from comments c, members m, articles a
-		where c.article_id = a.article_id and c.article_id = #{articleId} and m.member_id = c.member_id;
-	</select>
-
-	<insert id="writeComment" parameterType="Comment">
-		insert into comments (article_id, member_id, content)
-		values (#{articleId}, #{memberId}, #{content})
-	</insert>
-
 	<update id="update" parameterType="Article">
 		update articles set article_title=#{articleTitle}, article_content=#{articleContent},
 							member_name=#{memberName}, update_time=CURRENT_TIMESTAMP,
@@ -149,6 +135,36 @@
 	<delete id="remove" parameterType="int">
 		delete from articles
 		where article_id = #{articleId}
+	</delete>
+	
+	<select id="getCommentById" parameterType="int" resultType="Comment">
+		select comment_id as commentId, content, register_time as registerTime, article_id as articleId,
+			   c.member_id as memberId, m.member_name as memberName
+		from comments c, members m
+		where c.comment_id = #{commentId} and m.member_id = c.member_id
+	</select>
+	
+	<select id="getCommentsByArticleId" parameterType="int" resultType="Comment">
+		select comment_id as commentId, content, c.register_time as registerTime,
+				a.article_id as articleId,
+				m.member_id as memberId, m.member_name as memberName
+		from comments c, members m, articles a
+		where c.article_id = a.article_id and c.article_id = #{articleId} and m.member_id = c.member_id;
+	</select>
+
+	<insert id="writeComment" parameterType="Comment">
+		insert into comments (article_id, member_id, content)
+		values (#{articleId}, #{memberId}, #{content})
+	</insert>
+	
+	<update id="updateComment" parameterType="Comment">
+		update comments set content = #{content}
+		where comment_id = #{commentId}
+	</update>
+
+	<delete id="deleteComment" parameterType="int">
+		delete from comments
+		where comment_id = #{commentId}
 	</delete>
 
 </mapper>    
