@@ -1,6 +1,8 @@
 package com.ssafy.tripoline.member.model.service;
 
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -104,6 +106,34 @@ public class MemberServiceImpl implements MemberService {
 			throw new MemberException("비밀번호 조회 중 오류 발생");
 		}
 		return password;
+	}
+
+	@Override
+	public void saveRefreshToken(String memberId, String refreshToken) throws Exception {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("memberId", memberId);
+		map.put("token", refreshToken);
+		dao.saveRefreshToken(map);		
+	}
+
+	@Override
+	public Object getRefreshToken(String userId) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.getRefreshToken(userId);
+	}
+
+	@Override
+	public void deleRefreshToken(String userId) throws Exception {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("memberId", userId);
+		map.put("token", null);
+		dao.deleteRefreshToken(map);		
+	}
+
+	@Override
+	public Member userInfo(String memberId) throws Exception {
+		return dao.userInfo(memberId);
+
 	}
 
 

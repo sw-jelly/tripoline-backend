@@ -62,6 +62,7 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public Article getArticle(int articleId) {
+		System.out.println("service에서 게시글 가져오는중...............");
 		try {
 			Article article = dao.getArticle(articleId);
 
@@ -131,7 +132,7 @@ public class BoardServiceImpl implements BoardService {
 				throw new BoardException("게시글 정보를 찾을 수 없습니다.");
 			dao.updateLike(articleId);
 		} catch (SQLException e) {
-			throw new BoardException("게시 정보 등록 중 오류 발생");
+			throw new BoardException("좋아요 반영 중 오류 발생");
 		}
 	}
 

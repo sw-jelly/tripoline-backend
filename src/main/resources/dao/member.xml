@@ -11,7 +11,45 @@
 <!-- parameter타입으로는 1개만 올 수 있음, 여러개를 사용하고싶다면 Dto를 만들거나 Map을 사용해야함 
 	 데이터가 1개일때는 바로써도 되지만 일반적으로 매핑시 #{속성명} 사용  
 -->
-
+	<resultMap type="Member" id="member">
+		<result column="member_id" property="memberId"/>
+		<result column="user_name" property="userName"/>
+		<result column="member_password" property="memberPassword"/>
+		<result column="member_eamil" property="memberEmail"/>
+		<result column="member_role" property="memberRole"/>
+		<result column="token" property="refreshToken"/>
+	</resultMap>
+	
+	<select id="login" parameterType="String" resultMap="member">
+		select member_id, member_email, member_name, sido_code, gugun_code, member_photo, member_birthdate, member_gender, member_phone, member_role
+		from members
+		where member_id=#{memberId} and  member_password=#{memberPassword}
+	</select>
+	
+	<select id="userInfo" parameterType="string" resultMap="member">
+		select member_name ,member_id, member_email
+		from members
+		where member_id=#{memberId}
+	</select>
+	
+	<update id="saveRefreshToken" parameterType="map">
+		update members
+		set token = #{token}
+		where member_id=#{memberId}
+	</update>
+	
+	<select id="getRefreshToken" parameterType="string" resultType="string">
+		select token
+		from members
+		where member_id=#{memberId}
+	</select>
+	
+	<update id="deleteRefreshToken" parameterType="map">
+		update members
+		set token = #{token, jdbcType=VARCHAR}
+		where member_id=#{memberId}
+	</update>
+	
 	<select id="findPassword" parameterType="String" resultType="String">
 	select member_password
 	from members
@@ -24,11 +62,7 @@
 		where member_id=#{memberId}
 	</select>
 	
-	<select id="login" parameterType="String" resultType="Member">
-		select member_id, member_email, member_name, sido_code, gugun_code, member_photo, member_birthdate, member_gender, member_phone, member_role
-		from members
-		where member_id=#{memberId} and  member_password=#{memberPassword}
-	</select>
+
 	
 	<insert id="regist" parameterType="Member">
 		insert into members(member_id, member_password, member_name, member_email,  sido_code, gugun_code, member_photo, member_birthdate, member_gender, member_phone, member_role)

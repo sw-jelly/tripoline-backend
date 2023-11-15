@@ -16,9 +16,9 @@ public interface MemberService {
 
 	String findPassword(String memberId, String memberPhone);
 
-//	Member login(String id, String pass) ;
-//	Member search(String id) ;
-//	void regist(Member user) ;
-//	void update(Member user) ;
-//	void remove(String id) ;
+	void saveRefreshToken(String userId, String refreshToken) throws Exception;
+	Object getRefreshToken(String userId) throws Exception;
+	void deleRefreshToken(String userId) throws Exception;
+	Member userInfo(String userId) throws Exception;
+
 }
