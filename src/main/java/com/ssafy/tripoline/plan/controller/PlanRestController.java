@@ -147,7 +147,7 @@ public class PlanRestController {
 	
 	@ApiOperation(value = "계획 수정하기")
 	@ApiResponse(code = 200, message = "success")
-	@PutMapping("/plan/{planId}")
+	@PutMapping("/plan")
 	public ResponseEntity<String> update( @RequestBody PlanUpdateParam planParam) {
 		log.debug("plan.update..............planParam : {}", planParam);
 		planService.updatePlan(planParam);
@@ -156,7 +156,7 @@ public class PlanRestController {
 	
 	@ApiOperation(value = "계획 세부사항 수정")
 	@ApiResponse(code = 200, message = "success")
-	@PutMapping("/planDetail/{planDetailId}")
+	@PutMapping("/planDetail")
 	public ResponseEntity<String> update(@RequestBody PlanDetailUpdateParam planDetailParam) {
 		log.debug("plan.update..............planDetailId : {}", planDetailParam);
 		log.debug("plan.update..............planDetailParam : {}", planDetailParam);
