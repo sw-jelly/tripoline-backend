@@ -40,7 +40,9 @@
 		<if test="gugunCode != 0">
 			and gugun_code = #{gugunCode}
 		</if>
-
+		<if test="contentTypeId != 0">
+				and content_type_id = #{contentTypeId}
+		</if>
 	</select>
 	
 	<select id="searchByLocation" parameterType="int" resultMap="AttractionDto">

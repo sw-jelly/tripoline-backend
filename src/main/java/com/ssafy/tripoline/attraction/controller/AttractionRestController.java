@@ -37,8 +37,9 @@ public class AttractionRestController {
 	@GetMapping("/searchByTitle")
 	public ResponseEntity<?> searchByTitle(@RequestParam(defaultValue = "0") int sidoCode,
 										   @RequestParam(defaultValue = "0") int gugunCode,
+										   @RequestParam(defaultValue = "0") int contentTypeId,
 										   @RequestParam String keyword) {
-		List<Attraction> attractions = attractionService.searchByTitle(keyword, sidoCode, gugunCode);
+		List<Attraction> attractions = attractionService.searchByTitle(keyword, contentTypeId, sidoCode, gugunCode);
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("attractions", attractions);
 		if (attractions != null && !attractions.isEmpty()) {

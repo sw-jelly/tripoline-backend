@@ -33,9 +33,10 @@ public class AttractionServiceImpl implements AttractionService {
 	}
 
 	@Override
-	public List<Attraction> searchByTitle(String keyword, int sidoCode, int gugunCode) {
+	public List<Attraction> searchByTitle(String keyword, int contentTypeId, int sidoCode, int gugunCode) {
 		try {
 			Map<String, Object> paramMap = new HashMap<>();
+			paramMap.put("contentTypeId", contentTypeId);
 			paramMap.put("sidoCode", sidoCode);
 			paramMap.put("gugunCode", gugunCode);
 			paramMap.put("keyword", keyword);
