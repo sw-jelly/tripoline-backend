@@ -17,11 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.tripoline.TripolineException;
-import com.ssafy.tripoline.attraction.model.service.AttractionService;
 import com.ssafy.tripoline.plan.model.dto.Plan;
 import com.ssafy.tripoline.plan.model.dto.PlanDetail;
-import com.ssafy.tripoline.plan.model.dto.PlanDetailParam;
-import com.ssafy.tripoline.plan.model.dto.PlanParam;
+import com.ssafy.tripoline.plan.model.dto.PlanDetailRegistParam;
+import com.ssafy.tripoline.plan.model.dto.PlanDetailUpdateParam;
+import com.ssafy.tripoline.plan.model.dto.PlanRegistParam;
+import com.ssafy.tripoline.plan.model.dto.PlanUpdateParam;
 import com.ssafy.tripoline.plan.model.service.PlanService;
 
 import io.swagger.annotations.Api;
@@ -47,7 +48,7 @@ public class PlanRestController {
 	@ApiOperation(value = "새 계획 등록하기")
 	@ApiResponse(code = 200, message = "success")
 	@PostMapping("/plan")
-	public ResponseEntity<?> registPlan(@RequestBody PlanParam planParam) {
+	public ResponseEntity<?> registPlan(@RequestBody PlanRegistParam planParam) {
 		log.debug("Plan.regist.............................planParam : {}", planParam);
 		planService.createPlan(planParam);
 		return new ResponseEntity<Void>(HttpStatus.CREATED);
@@ -56,7 +57,7 @@ public class PlanRestController {
 	@ApiOperation(value = "새 여행 계획 세부 사항 등록하기")
 	@ApiResponse(code = 200, message = "success")
 	@PostMapping("/planDetail")
-	public ResponseEntity<?> registPlanDetail(@RequestBody PlanDetailParam planDetailParam) {
+	public ResponseEntity<?> registPlanDetail(@RequestBody PlanDetailRegistParam planDetailParam) {
 		log.debug("PlanDetail.regist.............................planDetailParam : {}", planDetailParam);
 		planService.createPlanDetail(planDetailParam);
 		return new ResponseEntity<Void>(HttpStatus.CREATED);
@@ -147,20 +148,19 @@ public class PlanRestController {
 	@ApiOperation(value = "계획 수정하기")
 	@ApiResponse(code = 200, message = "success")
 	@PutMapping("/plan/{planId}")
-	public ResponseEntity<String> update(@PathVariable int planId, @RequestBody PlanParam planParam) {
-		log.debug("plan.update..............planId : {}", planId);
+	public ResponseEntity<String> update( @RequestBody PlanUpdateParam planParam) {
 		log.debug("plan.update..............planParam : {}", planParam);
-		planService.updatePlan(planId, planParam);
+		planService.updatePlan(planParam);
 		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "계획 세부사항 수정")
 	@ApiResponse(code = 200, message = "success")
 	@PutMapping("/planDetail/{planDetailId}")
-	public ResponseEntity<String> update(@PathVariable int planDetailId, @RequestBody PlanDetailParam planDetailParam) {
-		log.debug("plan.update..............planDetailId : {}", planDetailId);
+	public ResponseEntity<String> update(@RequestBody PlanDetailUpdateParam planDetailParam) {
+		log.debug("plan.update..............planDetailId : {}", planDetailParam);
 		log.debug("plan.update..............planDetailParam : {}", planDetailParam);
-		planService.updatePlanDetail(planDetailId, planDetailParam);
+		planService.updatePlanDetail(planDetailParam);
 		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 	}
 	
@@ -178,7 +178,7 @@ public class PlanRestController {
 	@DeleteMapping("/planDetail/{planDetailId}")
 	public ResponseEntity<String> removePlanDetailById(@PathVariable int planDetailId) {
 		log.debug("plan.removePlanDetailById..............planDetailId : {}", planDetailId);
-		planService.deletePlan(planDetailId);
+		planService.deletePlanDetail(planDetailId);
 		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 	}
 	

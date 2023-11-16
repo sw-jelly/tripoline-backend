@@ -14,8 +14,8 @@
 			<result column="member_password" property="memberPassword" />
 			<result column="member_email" property="memberEmail" />
 			<result column="member_name" property="memberName" />
-			<result column="sido_code" property="sidoCode" />
-			<result column="gugun_code" property="gugunCode" />
+			<result column="member_sido_code" property="sidoCode" />
+			<result column="member_gugun_code" property="gugunCode" />
 			<result column="member_photo" property="memberPhoto" />
 			<result column="member_birthdate" property="memberBirthdate" />
 			<result column="member_gender" property="memberGender" />
@@ -52,8 +52,8 @@
 			<result column="tel" property="tel" />
 			<result column="first_image" property="firstImage" />
 			<result column="first_image2" property="firstImage2" />
-			<result column="sido_code" property="sidoCode" />
-			<result column="gugun_code" property="gugunCode" />
+			<result column="attraction_sido_code" property="sidoCode" />
+			<result column="attraction_gugun_code" property="gugunCode" />
 			<result column="latitude" property="latitude" />
 			<result column="longitude" property="longitude" />
 			<result column="overview" property="overview" />
@@ -61,12 +61,12 @@
 	</resultMap>
 
 
-	<insert id="createPlan" parameterType="PlanParam">
+	<insert id="createPlan" parameterType="PlanRegistParam">
 		insert into plans(start_date, end_date, sido_code, gugun_code, member_id, plan_title)
 		values (#{startDate}, #{endDate}, #{sidoCode}, #{gugunCode}, #{memberId}, #{planTitle})
 	</insert>
 	
-	<insert id="createPlanDetail" parameterType="PlanDetailParam">
+	<insert id="createPlanDetail" parameterType="PlanDetailRegistParam">
 		insert into plan_detail(visit_date, visit_order, plan_id, content_id)
 		values (#{visitDate}, #{visitOrder}, #{planId}, #{contentId})
 	</insert>
@@ -74,8 +74,8 @@
 	<select id="searchPlanById" parameterType="int" resultMap="PlanMap">
 		select plan_id, plan_title, start_date, end_date, 
 			   m.member_id, m.member_password, m.member_email, 
-			   m.member_name, m.sido_code, m.gugun_code, m.member_photo, 
-			   m.member_birthdate, m.member_gender, m.member_phone, m.member_role,
+			   m.member_name, m.sido_code as member_sido_code, m.gugun_code as member_gugun_code, 
+			   m.member_photo, m.member_birthdate, m.member_gender, m.member_phone, m.member_role,
 			   s.sido_code, s.sido_name, g.gugun_code, g.gugun_name
 		from plans p
       	join members m on m.member_id = p.member_id
@@ -87,11 +87,12 @@
 	<select id="searchPlanDetailById" parameterType="int" resultMap="PlanDetailMap">
 		select pd.plan_detail_id, pd.visit_date, pd.visit_order, pd.plan_id, pd.content_id,
 		      p.plan_id, p.plan_title, p.start_date, p.end_date,
-		      m.member_id, m.member_password, m.member_email, m.member_name, m.sido_code, 
-		      m.gugun_code, m.member_photo, m.member_birthdate, m.member_gender, m.member_phone, m.member_role,
+		      m.member_id, m.member_password, m.member_email, m.member_name, m.sido_code as member_sido_code, 
+		      m.gugun_code as member_gugun_code, m.member_photo, m.member_birthdate, m.member_gender, m.member_phone, m.member_role,
 		      s.sido_code, s.sido_name, g.gugun_code, g.gugun_name,
 		      a.content_type_id, a.title, a.addr1, a.addr2, a.zipcode, a.tel, a.first_image,
-		      a.first_image2, a.sido_code, a.gugun_code, a.latitude, a.longitude, a.overview
+		      a.first_image2, a.sido_code as attraction_sido_code, a.gugun_code as attraction_gugun_code, 
+		      a.latitude, a.longitude, a.overview
 		from plan_detail pd
 		join plans p on pd.plan_id = p.plan_id
 		join members m on m.member_id = p.member_id
@@ -102,29 +103,26 @@
 	</select>
 
 	<select id="searchAllPlans" resultMap="PlanMap">
-		select pd.plan_detail_id, pd.visit_date, pd.visit_order, pd.plan_id, pd.content_id,
-		      p.plan_id, p.plan_title, p.start_date, p.end_date,
-		      m.member_id, m.member_password, m.member_email, m.member_name, m.sido_code, 
-		      m.gugun_code, m.member_photo, m.member_birthdate, m.member_gender, m.member_phone, m.member_role,
-		      s.sido_code, s.sido_name, g.gugun_code, g.gugun_name,
-		      a.content_type_id, a.title, a.addr1, a.addr2, a.zipcode, a.tel, a.first_image,
-		      a.first_image2, a.sido_code, a.gugun_code, a.latitude, a.longitude, a.overview
-		from plan_detail pd
-		join plans p on pd.plan_id = p.plan_id
-		join members m on m.member_id = p.member_id
-		join gugun g on g.sido_code = p.sido_code and g.gugun_code = p.gugun_code
-		join sido s on s.sido_code = g.sido_code
-		join attraction_info a on pd.content_id = a.content_id
+		select plan_id, plan_title, start_date, end_date, 
+			   m.member_id, m.member_password, m.member_email, 
+			   m.member_name, m.sido_code as member_sido_code, m.gugun_code as member_gugun_code, 
+			   m.member_photo, m.member_birthdate, m.member_gender, m.member_phone, m.member_role,
+			   s.sido_code, s.sido_name, g.gugun_code, g.gugun_name
+		from plans p
+      	join members m on m.member_id = p.member_id
+      	join gugun g on g.sido_code = p.sido_code and g.gugun_code = p.gugun_code
+      	join sido s on s.sido_code = g.sido_code
 	</select>
 
 	<select id="searchAllPlanDetails" resultMap="PlanDetailMap">
 		select pd.plan_detail_id, pd.visit_date, pd.visit_order, pd.plan_id, pd.content_id,
 		      p.plan_id, p.plan_title, p.start_date, p.end_date,
-		      m.member_id, m.member_password, m.member_email, m.member_name, m.sido_code, 
-		      m.gugun_code, m.member_photo, m.member_birthdate, m.member_gender, m.member_phone, m.member_role,
+		      m.member_id, m.member_password, m.member_email, m.member_name, m.sido_code as member_sido_code, 
+		      m.gugun_code as member_gugun_code, m.member_photo, m.member_birthdate, m.member_gender, m.member_phone, m.member_role,
 		      s.sido_code, s.sido_name, g.gugun_code, g.gugun_name,
 		      a.content_type_id, a.title, a.addr1, a.addr2, a.zipcode, a.tel, a.first_image,
-		      a.first_image2, a.sido_code, a.gugun_code, a.latitude, a.longitude, a.overview
+		      a.first_image2, a.sido_code as attraction_sido_code, a.gugun_code as attraction_gugun_code, 
+		      a.latitude, a.longitude, a.overview
 		from plan_detail pd
 		join plans p on pd.plan_id = p.plan_id
 		join members m on m.member_id = p.member_id
@@ -136,11 +134,12 @@
 	<select id="searchPlanDetailsByPlanId" parameterType="int" resultMap="PlanDetailMap">
 		select pd.plan_detail_id, pd.visit_date, pd.visit_order, pd.plan_id, pd.content_id,
 		      p.plan_id, p.plan_title, p.start_date, p.end_date,
-		      m.member_id, m.member_password, m.member_email, m.member_name, m.sido_code, 
-		      m.gugun_code, m.member_photo, m.member_birthdate, m.member_gender, m.member_phone, m.member_role,
+		      m.member_id, m.member_password, m.member_email, m.member_name, m.sido_code as member_sido_code, 
+		      m.gugun_code as member_gugun_code, m.member_photo, m.member_birthdate, m.member_gender, m.member_phone, m.member_role,
 		      s.sido_code, s.sido_name, g.gugun_code, g.gugun_name,
 		      a.content_type_id, a.title, a.addr1, a.addr2, a.zipcode, a.tel, a.first_image,
-		      a.first_image2, a.sido_code, a.gugun_code, a.latitude, a.longitude, a.overview
+		      a.first_image2, a.sido_code as attraction_sido_code, a.gugun_code as attraction_gugun_code, 
+		      a.latitude, a.longitude, a.overview
 		from plan_detail pd
 		join plans p on pd.plan_id = p.plan_id
 		join members m on m.member_id = p.member_id
@@ -154,8 +153,8 @@
 		resultMap="PlanMap">
 		select plan_id, plan_title, start_date, end_date, 
 			   m.member_id, m.member_password, m.member_email, 
-			   m.member_name, m.sido_code, m.gugun_code, m.member_photo, 
-			   m.member_birthdate, m.member_gender, m.member_phone, m.member_role,
+			   m.member_name, m.sido_code as member_sido_code, m.gugun_code as member_gugun_code, 
+			   m.member_photo, m.member_birthdate, m.member_gender, m.member_phone, m.member_role,
 			   s.sido_code, s.sido_name, g.gugun_code, g.gugun_name
 		from plans p
       	join members m on m.member_id = p.member_id

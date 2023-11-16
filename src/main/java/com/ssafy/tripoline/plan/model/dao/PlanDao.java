@@ -2,20 +2,21 @@ package com.ssafy.tripoline.plan.model.dao;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
 import com.ssafy.tripoline.plan.model.dto.Plan;
 import com.ssafy.tripoline.plan.model.dto.PlanDetail;
-import com.ssafy.tripoline.plan.model.dto.PlanDetailParam;
-import com.ssafy.tripoline.plan.model.dto.PlanParam;
+import com.ssafy.tripoline.plan.model.dto.PlanDetailRegistParam;
+import com.ssafy.tripoline.plan.model.dto.PlanDetailUpdateParam;
+import com.ssafy.tripoline.plan.model.dto.PlanRegistParam;
+import com.ssafy.tripoline.plan.model.dto.PlanUpdateParam;
 
 @Mapper
 public interface PlanDao {
-	void createPlan(PlanParam psd) throws SQLException;
+	void createPlan(PlanRegistParam planRegistParam) throws SQLException;
 
-	void createPlanDetail(PlanDetailParam planDetail) throws SQLException;
+	void createPlanDetail(PlanDetailRegistParam planDetail) throws SQLException;
 	
 	Plan searchPlanById(int planId) throws SQLException;
 	
@@ -31,9 +32,9 @@ public interface PlanDao {
 
 	boolean canWriteReview(int planId) throws SQLException;
 
-	void updatePlan(Map<String, Object> paramMap) throws SQLException;
+	void updatePlan(PlanUpdateParam planUpdateParam) throws SQLException;
 
-	void updatePlanDetail(Map<String, Object> paramMap) throws SQLException;
+	void updatePlanDetail(PlanDetailUpdateParam planDatailUpdateParam) throws SQLException;
 
 	void deletePlan(int planId) throws SQLException;
 

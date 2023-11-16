@@ -11,8 +11,10 @@ import com.ssafy.tripoline.TripolineException;
 import com.ssafy.tripoline.plan.model.dao.PlanDao;
 import com.ssafy.tripoline.plan.model.dto.Plan;
 import com.ssafy.tripoline.plan.model.dto.PlanDetail;
-import com.ssafy.tripoline.plan.model.dto.PlanDetailParam;
-import com.ssafy.tripoline.plan.model.dto.PlanParam;
+import com.ssafy.tripoline.plan.model.dto.PlanDetailRegistParam;
+import com.ssafy.tripoline.plan.model.dto.PlanDetailUpdateParam;
+import com.ssafy.tripoline.plan.model.dto.PlanRegistParam;
+import com.ssafy.tripoline.plan.model.dto.PlanUpdateParam;
 
 @Service
 public class PlanServiceImpl implements PlanService {
@@ -26,7 +28,7 @@ public class PlanServiceImpl implements PlanService {
 	}
 
 	@Override
-    public void createPlan(PlanParam planParam) {
+    public void createPlan(PlanRegistParam planParam) {
         try {
             planDao.createPlan(planParam);
         } catch (SQLException e) {
@@ -36,7 +38,7 @@ public class PlanServiceImpl implements PlanService {
     }
 
     @Override
-    public void createPlanDetail(PlanDetailParam planDetailParam) {
+    public void createPlanDetail(PlanDetailRegistParam planDetailParam) {
         try {
             planDao.createPlanDetail(planDetailParam);
         } catch (SQLException e) {
@@ -116,14 +118,11 @@ public class PlanServiceImpl implements PlanService {
     }
 
     @Override
-    public void updatePlan(int planId, PlanParam planParam) {
+    public void updatePlan(PlanUpdateParam planParam) {
         try {
-        	Plan find = planDao.searchPlanById(planId);
+        	Plan find = planDao.searchPlanById(planParam.getPlanId());
         	if (find == null) throw new TripolineException("존재하지 않는 Plan입니다.");
-        	Map<String, Object> paramMap = new HashMap<String, Object>();
-        	paramMap.put("planId", planId);
-        	paramMap.put("planParam", planParam);
-            planDao.updatePlan(paramMap);
+            planDao.updatePlan(planParam);
         } catch (SQLException e) {
             e.printStackTrace();
             throw new TripolineException("Plan 업데이트 중 오류 발생");
@@ -131,14 +130,12 @@ public class PlanServiceImpl implements PlanService {
     }
 
     @Override
-    public void updatePlanDetail(int planDetailId, PlanDetailParam planDetailParam) {
+    public void updatePlanDetail(PlanDetailUpdateParam planDetailParam) {
         try {
-        	PlanDetail find = planDao.searchPlanDetailById(planDetailId);
+        	PlanDetail find = planDao.searchPlanDetailById(planDetailParam.getPlanDetailId());
         	if (find == null) throw new TripolineException("존재하지 않는 PlanDetail입니다.");
         	Map<String, Object> paramMap = new HashMap<String, Object>();
-        	paramMap.put("planDetailId", planDetailId);
-        	paramMap.put("planDetailParam", planDetailParam);
-            planDao.updatePlanDetail(paramMap);
+            planDao.updatePlanDetail(planDetailParam);
         } catch (SQLException e) {
             e.printStackTrace();
             throw new TripolineException("PlanDetail 업데이트 중 오류 발생");

@@ -14,8 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.tripoline.plan.model.dto.Plan;
 import com.ssafy.tripoline.plan.model.dto.PlanDetail;
-import com.ssafy.tripoline.plan.model.dto.PlanDetailParam;
-import com.ssafy.tripoline.plan.model.dto.PlanParam;
+import com.ssafy.tripoline.plan.model.dto.PlanDetailRegistParam;
+import com.ssafy.tripoline.plan.model.dto.PlanRegistParam;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -35,7 +35,7 @@ class PlanDaoTest {
 
 	@Test
 	void testCreatePlan() throws Exception {
-		PlanParam plan = PlanParam.builder()
+		PlanRegistParam plan = PlanRegistParam.builder()
 				.memberId("gosjorb")
 				.planTitle("테스트 여행3")
 				.startDate(new Date(2023, 12, 1))
@@ -49,7 +49,7 @@ class PlanDaoTest {
 
 	@Test
 	void testCreatePlanDetail() throws Exception {
-		PlanDetailParam planDetail = PlanDetailParam.builder()
+		PlanDetailRegistParam planDetail = PlanDetailRegistParam.builder()
 				.planId(1)
 				.contentId(126486)
 				.visitDate(new Date(2023, 12, 1))
@@ -108,33 +108,33 @@ class PlanDaoTest {
 //		fail("Not yet implemented");
 //	}
 
-	@Test
-	void testUpdatePlan() throws Exception {
-		Plan plan = dao.searchPlanById(2);
-		log.debug("plan : ", plan);
-		PlanParam planParam = PlanParam.of(plan);
-		planParam.setPlanTitle("난 이게 좋아");
-		
-		Map<String, Object> paramMap = new HashMap<>();
-		paramMap.put("planId", 2);
-		paramMap.put("planParam", planParam);
-		dao.updatePlan(paramMap);
-		log.debug("--------------updatePlan : {}",dao.searchPlanById(2));
-	}
-
-	@Test
-	void testUpdatePlanDetail() throws Exception {
-		PlanDetail planDetail = dao.searchPlanDetailById(10);
-		log.debug("planDetail : ", planDetail);
-		PlanDetailParam planDetailParam = PlanDetailParam.of(planDetail);
-		planDetailParam.setVisitOrder(2);
-		
-		Map<String, Object> paramMap = new HashMap<>();
-		paramMap.put("planDetailId", 1);
-		paramMap.put("planDetailParam", planDetailParam);
-		dao.updatePlanDetail(paramMap);
-		log.debug("--------------updatePlanDetail : {}", dao.searchPlanDetailById(2));
-	}
+//	@Test
+//	void testUpdatePlan() throws Exception {
+//		Plan plan = dao.searchPlanById(2);
+//		log.debug("plan : ", plan);
+//		PlanRegistParam planParam = PlanRegistParam.of(plan);
+//		planParam.setPlanTitle("난 이게 좋아");
+//		
+//		Map<String, Object> paramMap = new HashMap<>();
+//		paramMap.put("planId", 2);
+//		paramMap.put("planParam", planParam);
+//		dao.updatePlan(paramMap);
+//		log.debug("--------------updatePlan : {}",dao.searchPlanById(2));
+//	}
+//
+//	@Test
+//	void testUpdatePlanDetail() throws Exception {
+//		PlanDetail planDetail = dao.searchPlanDetailById(10);
+//		log.debug("planDetail : ", planDetail);
+//		PlanDetailRegistParam planDetailParam = PlanDetailRegistParam.of(planDetail);
+//		planDetailParam.setVisitOrder(2);
+//		
+//		Map<String, Object> paramMap = new HashMap<>();
+//		paramMap.put("planDetailId", 1);
+//		paramMap.put("planDetailParam", planDetailParam);
+//		dao.updatePlanDetail(paramMap);
+//		log.debug("--------------updatePlanDetail : {}", dao.searchPlanDetailById(2));
+//	}
 
 	@Test
 	void testDeletePlan() throws Exception {

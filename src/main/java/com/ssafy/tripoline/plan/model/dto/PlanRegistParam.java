@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class PlanParam {
+public class PlanRegistParam {
 	String memberId;
 	String planTitle;
 	Date startDate;
@@ -15,8 +15,8 @@ public class PlanParam {
 	int sidoCode;
 	int gugunCode;
 	
-	public static PlanParam of(Plan plan) {
-		return PlanParam.builder()
+	public static PlanRegistParam of(Plan plan) {
+		return PlanRegistParam.builder()
 				.memberId(plan.getMember().getMemberId())
 				.planTitle(plan.getPlanTitle())
 				.startDate(plan.getStartDate())
