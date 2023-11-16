@@ -21,6 +21,7 @@ import com.ssafy.tripoline.plan.model.dto.Plan;
 import com.ssafy.tripoline.plan.model.dto.PlanDetail;
 import com.ssafy.tripoline.plan.model.dto.PlanDetailRegistParam;
 import com.ssafy.tripoline.plan.model.dto.PlanDetailUpdateParam;
+import com.ssafy.tripoline.plan.model.dto.PlanListDto;
 import com.ssafy.tripoline.plan.model.dto.PlanRegistParam;
 import com.ssafy.tripoline.plan.model.dto.PlanUpdateParam;
 import com.ssafy.tripoline.plan.model.service.PlanService;
@@ -136,10 +137,10 @@ public class PlanRestController {
 	@GetMapping("/plan/member/{memberId}")
 	public ResponseEntity<?> getAllMemberPlans(@PathVariable String memberId) {
 		log.debug("plan.searchPlansByMemberId..............memberId : {}", memberId);
-		List<Plan> plans = planService.searchPlansByMemberId(memberId);
+		List<PlanListDto> plans = planService.searchPlansByMemberId(memberId);
 		
 		if (plans != null && !plans.isEmpty()) {
-			return new ResponseEntity<List<Plan>>(plans, HttpStatus.OK);
+			return new ResponseEntity<List<PlanListDto>>(plans, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 		}

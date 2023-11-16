@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import com.ssafy.tripoline.plan.model.dto.Plan;
 import com.ssafy.tripoline.plan.model.dto.PlanDetail;
 import com.ssafy.tripoline.plan.model.dto.PlanDetailRegistParam;
 import com.ssafy.tripoline.plan.model.dto.PlanDetailUpdateParam;
+import com.ssafy.tripoline.plan.model.dto.PlanListDto;
 import com.ssafy.tripoline.plan.model.dto.PlanRegistParam;
 import com.ssafy.tripoline.plan.model.dto.PlanUpdateParam;
 
@@ -98,9 +100,12 @@ public class PlanServiceImpl implements PlanService {
     }
 
     @Override
-    public List<Plan> searchPlansByMemberId(String memberId) {
+    public List<PlanListDto> searchPlansByMemberId(String memberId) {
         try {
-            return planDao.searchPlansByMemberId(memberId);
+        	return planDao.searchPlansByMemberId(memberId)
+        			.stream()
+        			.map(plan -> PlanListDto.of(plan))
+        			.collect(Collectors.toList());
         } catch (SQLException e) {
             e.printStackTrace();
             throw new TripolineException("특정 회원의 Plan 조회 중 오류 발생");

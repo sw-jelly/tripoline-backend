@@ -6,6 +6,7 @@ import com.ssafy.tripoline.plan.model.dto.Plan;
 import com.ssafy.tripoline.plan.model.dto.PlanDetail;
 import com.ssafy.tripoline.plan.model.dto.PlanDetailRegistParam;
 import com.ssafy.tripoline.plan.model.dto.PlanDetailUpdateParam;
+import com.ssafy.tripoline.plan.model.dto.PlanListDto;
 import com.ssafy.tripoline.plan.model.dto.PlanRegistParam;
 import com.ssafy.tripoline.plan.model.dto.PlanUpdateParam;
 
@@ -24,7 +25,7 @@ public interface PlanService {
 
 	List<PlanDetail> searchPlanDetailsByPlanId(int planId);
 
-	List<Plan> searchPlansByMemberId(String memberId);
+	List<PlanListDto> searchPlansByMemberId(String memberId);
 
 	boolean canWriteReview(int planId);
 
