@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.tripoline.board.model.dao.BoardDao">
+
+	<resultMap type="Article" id="ArticleDto">
+		<id column="article_id" property="articleId" />
+		<result column="article_title" property="articleTitle" />
+		<result column="article_content" property="articleContent" />
+		<result column="member_id" property="memberId" />
+		<result column="member_name" property="memberName" />
+		<result column="like_count" property="likeCount" />
+		<result column="view_count" property="viewCount" />
+		<result column="register_time" property="registerTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="category_id" property="categoryId" />
+		<result column="image" property="image" />
+	</resultMap>
+
+	<!-- <resultMap type="Article" id="viewArticle" extends="article"> <collection 
+		property="fileInfos" column="article_id" javaType="list" ofType="fileInfoDto" 
+		select="fileInfoList"/> </resultMap> -->
+
+	<insert id="write" parameterType="Article">
+		insert into articles (article_title, article_content, member_id, member_name,
+							  like_count, view_count, register_time, update_time, category_id, image)
+		values (#{articleTitle}, #{articleContent}, #{memberId}, #{memberName}, 0, 0, CURRENT_TIMESTAMP, 
+				CURRENT_TIMESTAMP, #{categoryId}, #{image})
+	</insert>
+
+	<sql id="searchCon">
+		<if test="word !=null and word !='' ">
+			<choose>
+				<when test=" key == 'article_id' ">
+					article_id = #{word}
+				</when>
+				<when test=" key == 'article_title' ">
+					article_title like concat('%',#{word},'%')
+				</when>
+				<when test=" key == 'member_id' ">
+					member_id like concat('%',#{word},'%')
+				</when>
+			</choose>
+		</if>
+	</sql>
+
+	<select id="searchAll" parameterType="PageBean"
+		resultMap="ArticleDto">
+		select category_id, article_id, article_title, member_name, view_count,
+			   like_count, register_time, update_time, image
+		from articles
+		<where>
+			<include refid="searchCon"></include>
+		</where>
+		order by article_id desc
+		limit #{start}, #{interval}
+	</select>
+
+	<select id="totalCount" parameterType="PageBean"
+		resultType="int">
+		select count(article_id)
+		from articles
+		<where>
+			<include refid="searchCon"></include>
+		</where>
+	</select>
+
+	<select id="getArticle" parameterType="int"
+		resultMap="ArticleDto">
+		select *
+		from articles
+		where article_id = #{articleId}
+	</select>
+
+	<select id="BestTotalCount" parameterType="PageBean"
+		resultType="int">
+		select count(article_id)
+		from articles
+		where view_count >= 20 or
+		like_count >= 6
+		<where>
+			<include refid="searchCon"></include>
+		</where>
+	</select>
+
+	<select id="getBestAll" parameterType="PageBean"
+		resultMap="ArticleDto">
+		select *
+		from articles
+		where view_count >= 20 or like_count >= 6
+		<where>
+			<include refid="searchCon"></include>
+		</where>
+		order by article_id desc limit #{start}, #{interval}
+	</select>
+
+	<select id="categoryCount" parameterType="int"
+		resultType="int">
+		select count(*)
+		from articles
+		where category_id=#{categoryId}
+	</select>
+
+	<select id="searchByCategory" parameterType="java.util.Map"
+		resultMap="ArticleDto">
+		select *
+		from articles
+		where category_id=#{categoryId}
+		<where>
+			<include refid="searchCon"></include>
+		</where>
+		order by article_id
+		limit #{bean.start}, #{bean.interval}
+	</select>
+
+	<update id="update" parameterType="Article">
+		update articles set article_title=#{articleTitle}, article_content=#{articleContent},
+							member_name=#{memberName}, update_time=CURRENT_TIMESTAMP,
+							category_id=#{categoryId}, image = #{image}
+		where article_id = #{articleId}
+	</update>
+
+	<update id="updateHit" parameterType="int">
+		update articles 
+		set view_count = view_count + 1
+		where article_id = #{articleId}
+	</update>
+
+	<update id="updateLike" parameterType="int">
+		update articles set like_count = like_count + 1
+		where article_id = #{articleId}
+	</update>
+
+	<delete id="remove" parameterType="int">
+		delete from articles
+		where article_id = #{articleId}
+	</delete>
+	
+	<select id="getCommentById" parameterType="int" resultType="Comment">
+		select comment_id as commentId, content, register_time as registerTime, article_id as articleId,
+			   c.member_id as memberId, m.member_name as memberName
+		from comments c, members m
+		where c.comment_id = #{commentId} and m.member_id = c.member_id
+	</select>
+	
+	<select id="getCommentsByArticleId" parameterType="int" resultType="Comment">
+		select comment_id as commentId, content, c.register_time as registerTime,
+				a.article_id as articleId,
+				m.member_id as memberId, m.member_name as memberName
+		from comments c, members m, articles a
+		where c.article_id = a.article_id and c.article_id = #{articleId} and m.member_id = c.member_id;
+	</select>
+
+	<insert id="writeComment" parameterType="Comment">
+		insert into comments (article_id, member_id, content)
+		values (#{articleId}, #{memberId}, #{content})
+	</insert>
+	
+	<update id="updateComment" parameterType="Comment">
+		update comments set content = #{content}
+		where comment_id = #{commentId}
+	</update>
+
+	<delete id="deleteComment" parameterType="int">
+		delete from comments
+		where comment_id = #{commentId}
+	</delete>
+
+</mapper>    
+    
+    

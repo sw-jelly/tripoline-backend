@@ -13,21 +13,20 @@
 -->
 	<resultMap type="Member" id="member">
 		<result column="member_id" property="memberId"/>
-		<result column="user_name" property="userName"/>
-		<result column="member_password" property="memberPassword"/>
+		<result column="member_name" property="memberName"/>
 		<result column="member_eamil" property="memberEmail"/>
 		<result column="member_role" property="memberRole"/>
 		<result column="token" property="refreshToken"/>
 	</resultMap>
 	
-	<select id="login" parameterType="String" resultMap="member">
+	<select id="login" parameterType="String" resultType="Member">
 		select member_id, member_email, member_name, sido_code, gugun_code, member_photo, member_birthdate, member_gender, member_phone, member_role
 		from members
 		where member_id=#{memberId} and  member_password=#{memberPassword}
 	</select>
 	
 	<select id="userInfo" parameterType="string" resultMap="member">
-		select member_name ,member_id, member_email
+		select member_name ,member_id, member_email, member_role member_phone	
 		from members
 		where member_id=#{memberId}
 	</select>
