@@ -133,7 +133,6 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public Member userInfo(String memberId) throws Exception {
 		return dao.userInfo(memberId);
-
 	}
 
 

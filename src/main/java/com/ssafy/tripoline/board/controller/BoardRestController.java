@@ -154,7 +154,6 @@ public class BoardRestController {
 		Article article = null;
 		try {
 			article = boardService.getArticle(articleId);
-
 		} catch (Exception e) {
 			return new ResponseEntity<String>("처리 중 오류가 발생하였습니다", HttpStatus.BAD_REQUEST);
 		}
