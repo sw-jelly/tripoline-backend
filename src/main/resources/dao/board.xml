@@ -15,18 +15,43 @@
 		<result column="register_time" property="registerTime" />
 		<result column="update_time" property="updateTime" />
 		<result column="category_id" property="categoryId" />
-		<result column ="comment_count" property="commentCount"/>
 		<result column="image" property="image" />
+		<result column="comment_count" property="commentCount" />
 	</resultMap>
 
 	<!-- <resultMap type="Article" id="viewArticle" extends="article"> <collection 
 		property="fileInfos" column="article_id" javaType="list" ofType="fileInfoDto" 
 		select="fileInfoList"/> </resultMap> -->
 
+<!-- 
+	<resultMap type="Article" id="viewArticle" extends="ArticleDto">
+		<collection property="fileInfos" column="article_no" javaType="list" ofType="fileInfoDto" select="fileInfoList"/>
+	</resultMap>
+	
+	<resultMap type="fileInfoDto" id="file">
+		<result column="save_folder" property="saveFolder"/>
+		<result column="original_file" property="originalFile"/>
+		<result column="save_file" property="saveFile"/>
+	</resultMap>
+	
+	<insert id="registerFile" parameterType="boardDto">
+		insert into file_info (article_no, save_folder, original_file, save_file)
+		values
+		<foreach collection="fileInfos" item="fileinfo" separator=" , ">
+			(#{articleNo}, #{fileinfo.saveFolder}, #{fileinfo.originalFile}, #{fileinfo.saveFile})
+		</foreach>
+	</insert>
+	 -->
+	
+	
+	
+	
+	
 	<insert id="write" parameterType="Article">
 		insert into articles
 		(article_title, article_content, member_id, member_name,
-		like_count, view_count, register_time, update_time, category_id, image)
+		like_count,
+		view_count, register_time, update_time, category_id, image)
 		values
 		(#{articleTitle}, #{articleContent}, #{memberId}, #{memberName}, 0, 0,
 		CURRENT_TIMESTAMP,
@@ -49,18 +74,21 @@
 		</if>
 	</sql>
 
-	<select id="searchAll" parameterType="PageBean"
-		resultMap="ArticleDto">
-		select category_id, article_id, article_title, member_name,
-		view_count,
-		like_count, register_time, update_time, image
-		from articles
-		<where>
-			<include refid="searchCon"></include>
-		</where>
-		order by article_id desc
-		limit #{start}, #{interval}
-	</select>
+    <select id="searchAll" parameterType="PageBean"
+        resultMap="ArticleDto">
+        select category_id, article_id, article_title, member_name, view_count,
+        like_count, register_time, update_time,
+        (SELECT COALESCE(COUNT(*), 0)
+        FROM comments
+        WHERE article_id = articles.article_id
+        ) AS comment_count
+        from articles
+        <where>
+            <include refid="searchCon"></include>
+        </where>
+        order by article_id desc
+        limit #{start}, #{interval}
+    </select>
 
 	<select id="totalCount" parameterType="PageBean"
 		resultType="int">
@@ -73,13 +101,9 @@
 
 	<select id="getArticle" parameterType="int"
 		resultMap="ArticleDto">
-		SELECT *,
-		(SELECT COALESCE(COUNT(*), 0)
-		FROM comments
-		WHERE article_id = articles.article_id
-		) AS comment_count
+		SELECT *
 		FROM articles
-		WHERE article_id =  #{articleId}
+		WHERE article_id = #{articleId}
 	</select>
 
 	<select id="BestTotalCount" parameterType="PageBean"
@@ -95,9 +119,14 @@
 
 	<select id="getBestAll" parameterType="PageBean"
 		resultMap="ArticleDto">
-		select *
+		select category_id, article_id, article_title, member_name, view_count,
+        like_count, register_time, update_time, (SELECT COALESCE(COUNT(*), 0)
+        FROM comments
+        WHERE article_id = articles.article_id
+        ) AS comment_count
 		from articles
 		where view_count >= 20 or like_count >= 6
+		
 		<where>
 			<include refid="searchCon"></include>
 		</where>
@@ -112,7 +141,11 @@
 
 	<select id="searchByCategory" parameterType="java.util.Map"
 		resultMap="ArticleDto">
-		select *
+		select category_id, article_id, article_title, member_name, view_count,
+        like_count, register_time, update_time, (SELECT COALESCE(COUNT(*), 0)
+        FROM comments
+        WHERE article_id = articles.article_id
+        ) AS comment_count
 		from articles
 		where category_id=#{categoryId}
 		<where>
@@ -133,7 +166,8 @@
 
 	<update id="updateHit" parameterType="int">
 		update articles
-		set view_count = view_count + 1
+		set
+		view_count = view_count + 1
 		where article_id = #{articleId}
 	</update>
 
@@ -153,9 +187,11 @@
 		resultType="Comment">
 		select comment_id as commentId, content, register_time as
 		registerTime, article_id as articleId,
-		c.member_id as memberId, m.member_name as memberName
+		c.member_id as memberId,
+		m.member_name as memberName
 		from comments c, members m
-		where c.comment_id = #{commentId} and m.member_id = c.member_id
+		where
+		c.comment_id = #{commentId} and m.member_id = c.member_id
 	</select>
 
 	<select id="getCommentsByArticleId" parameterType="int"
@@ -163,11 +199,14 @@
 		select comment_id as commentId, content, c.register_time as
 		registerTime,
 		a.article_id as articleId,
-		m.member_id as memberId, m.member_name as memberName
+		m.member_id as memberId,
+		m.member_name as memberName
 		from comments c, members m,
 		articles a
-		where c.article_id = a.article_id and c.article_id =
-		#{articleId} and m.member_id = c.member_id;
+		where
+		c.article_id = a.article_id and c.article_id =
+		#{articleId} and
+		m.member_id = c.member_id;
 	</select>
 
 	<insert id="writeComment" parameterType="Comment">

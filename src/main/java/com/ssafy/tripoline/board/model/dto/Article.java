@@ -2,10 +2,10 @@ package com.ssafy.tripoline.board.model.dto;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
 
 import io.swagger.annotations.ApiParam;
 import lombok.Data;
-import lombok.NonNull;
 
 @Data
 public class Article implements Serializable {
@@ -44,6 +44,10 @@ public class Article implements Serializable {
 	
 	@ApiParam(value="코멘트 개수")
 	private int commentCount;
+	
+//	@ApiParam(value="파일 첨부")
+//	private List<FileInfoDto> fileInfos;
+
 	
 }
 
