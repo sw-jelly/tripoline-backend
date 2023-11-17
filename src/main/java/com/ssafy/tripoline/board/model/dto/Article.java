@@ -42,5 +42,8 @@ public class Article implements Serializable {
 	@ApiParam(value="첨부 이미지")
 	private String image;
 	
+	@ApiParam(value="코멘트 개수")
+	private int commentCount;
+	
 }
 

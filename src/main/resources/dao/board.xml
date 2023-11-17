@@ -15,6 +15,7 @@
 		<result column="register_time" property="registerTime" />
 		<result column="update_time" property="updateTime" />
 		<result column="category_id" property="categoryId" />
+		<result column ="comment_count" property="commentCount"/>
 		<result column="image" property="image" />
 	</resultMap>
 
@@ -23,10 +24,13 @@
 		select="fileInfoList"/> </resultMap> -->
 
 	<insert id="write" parameterType="Article">
-		insert into articles (article_title, article_content, member_id, member_name,
-							  like_count, view_count, register_time, update_time, category_id, image)
-		values (#{articleTitle}, #{articleContent}, #{memberId}, #{memberName}, 0, 0, CURRENT_TIMESTAMP, 
-				CURRENT_TIMESTAMP, #{categoryId}, #{image})
+		insert into articles
+		(article_title, article_content, member_id, member_name,
+		like_count, view_count, register_time, update_time, category_id, image)
+		values
+		(#{articleTitle}, #{articleContent}, #{memberId}, #{memberName}, 0, 0,
+		CURRENT_TIMESTAMP,
+		CURRENT_TIMESTAMP, #{categoryId}, #{image})
 	</insert>
 
 	<sql id="searchCon">
@@ -47,8 +51,9 @@
 
 	<select id="searchAll" parameterType="PageBean"
 		resultMap="ArticleDto">
-		select category_id, article_id, article_title, member_name, view_count,
-			   like_count, register_time, update_time, image
+		select category_id, article_id, article_title, member_name,
+		view_count,
+		like_count, register_time, update_time, image
 		from articles
 		<where>
 			<include refid="searchCon"></include>
@@ -68,9 +73,13 @@
 
 	<select id="getArticle" parameterType="int"
 		resultMap="ArticleDto">
-		select *
-		from articles
-		where article_id = #{articleId}
+		SELECT *,
+		(SELECT COALESCE(COUNT(*), 0)
+		FROM comments
+		WHERE article_id = articles.article_id
+		) AS comment_count
+		FROM articles
+		WHERE article_id =  #{articleId}
 	</select>
 
 	<select id="BestTotalCount" parameterType="PageBean"
@@ -95,8 +104,7 @@
 		order by article_id desc limit #{start}, #{interval}
 	</select>
 
-	<select id="categoryCount" parameterType="int"
-		resultType="int">
+	<select id="categoryCount" parameterType="int" resultType="int">
 		select count(*)
 		from articles
 		where category_id=#{categoryId}
@@ -115,50 +123,63 @@
 	</select>
 
 	<update id="update" parameterType="Article">
-		update articles set article_title=#{articleTitle}, article_content=#{articleContent},
-							member_name=#{memberName}, update_time=CURRENT_TIMESTAMP,
-							category_id=#{categoryId}, image = #{image}
-		where article_id = #{articleId}
+		update articles set
+		article_title=#{articleTitle}, article_content=#{articleContent},
+		member_name=#{memberName}, update_time=CURRENT_TIMESTAMP,
+		category_id=#{categoryId}, image = #{image}
+		where article_id =
+		#{articleId}
 	</update>
 
 	<update id="updateHit" parameterType="int">
-		update articles 
+		update articles
 		set view_count = view_count + 1
 		where article_id = #{articleId}
 	</update>
 
 	<update id="updateLike" parameterType="int">
-		update articles set like_count = like_count + 1
+		update articles set
+		like_count = like_count + 1
 		where article_id = #{articleId}
 	</update>
 
 	<delete id="remove" parameterType="int">
 		delete from articles
-		where article_id = #{articleId}
+		where
+		article_id = #{articleId}
 	</delete>
-	
-	<select id="getCommentById" parameterType="int" resultType="Comment">
-		select comment_id as commentId, content, register_time as registerTime, article_id as articleId,
-			   c.member_id as memberId, m.member_name as memberName
+
+	<select id="getCommentById" parameterType="int"
+		resultType="Comment">
+		select comment_id as commentId, content, register_time as
+		registerTime, article_id as articleId,
+		c.member_id as memberId, m.member_name as memberName
 		from comments c, members m
 		where c.comment_id = #{commentId} and m.member_id = c.member_id
 	</select>
-	
-	<select id="getCommentsByArticleId" parameterType="int" resultType="Comment">
-		select comment_id as commentId, content, c.register_time as registerTime,
-				a.article_id as articleId,
-				m.member_id as memberId, m.member_name as memberName
-		from comments c, members m, articles a
-		where c.article_id = a.article_id and c.article_id = #{articleId} and m.member_id = c.member_id;
+
+	<select id="getCommentsByArticleId" parameterType="int"
+		resultType="Comment">
+		select comment_id as commentId, content, c.register_time as
+		registerTime,
+		a.article_id as articleId,
+		m.member_id as memberId, m.member_name as memberName
+		from comments c, members m,
+		articles a
+		where c.article_id = a.article_id and c.article_id =
+		#{articleId} and m.member_id = c.member_id;
 	</select>
 
 	<insert id="writeComment" parameterType="Comment">
-		insert into comments (article_id, member_id, content)
-		values (#{articleId}, #{memberId}, #{content})
+		insert into comments
+		(article_id, member_id, content)
+		values (#{articleId}, #{memberId},
+		#{content})
 	</insert>
-	
+
 	<update id="updateComment" parameterType="Comment">
-		update comments set content = #{content}
+		update comments set
+		content = #{content}
 		where comment_id = #{commentId}
 	</update>
 

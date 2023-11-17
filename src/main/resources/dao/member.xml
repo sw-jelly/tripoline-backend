@@ -14,8 +14,13 @@
 	<resultMap type="Member" id="member">
 		<result column="member_id" property="memberId"/>
 		<result column="member_name" property="memberName"/>
-		<result column="member_eamil" property="memberEmail"/>
+		<result column="member_email" property="memberEmail"/>
 		<result column="member_role" property="memberRole"/>
+		<result column="member_phone" property="memberPhone"/>
+		<result column="member_photo" property="memberPhoto"/>
+		<result column="member_birthdate" property="memberBirthdate"/>
+		<result column="sido_code" property="sidoCode"/>
+		<result column="gugun_code" property="gugunCode" />
 		<result column="token" property="refreshToken"/>
 	</resultMap>
 	
@@ -26,7 +31,7 @@
 	</select>
 	
 	<select id="userInfo" parameterType="string" resultMap="member">
-		select member_name ,member_id, member_email, member_role member_phone	
+		select member_name, member_id, member_email, member_role member_phone,member_photo,	member_birthdate, sido_code, gugun_code
 		from members
 		where member_id=#{memberId}
 	</select>
@@ -69,7 +74,7 @@
 	</insert>
 	
 	<update id="update" parameterType="Member">
-		update members set member_password=#{memberPassword}, member_name=#{memberName},member_email=#{memberEmail},  sido_code=#{sidoCode}, gugun_code=#{gugunCode}, member_photo=#{memberPhoto}, member_birthdate=#{memberBirthdate}, member_gender=#{memberGender}, member_phone=#{memberPhone}, member_role=#{memberRole}
+		update members set member_name=#{memberName}, member_phone=#{memberPhone}, member_email=#{memberEmail},    sido_code=#{sidoCode}, gugun_code=#{gugunCode}, member_photo=#{memberPhoto},  member_role=#{memberRole}
 		where member_id=#{memberId}
 	</update>
 		                                
