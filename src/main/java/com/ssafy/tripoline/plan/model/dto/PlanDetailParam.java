@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class PlanDetailUpdateParam {
+public class PlanDetailParam {
 	
 	int planDetailId;
 	int planId;
@@ -15,8 +15,8 @@ public class PlanDetailUpdateParam {
 	Date visitDate;
 	int visitOrder;
 
-	public static PlanDetailUpdateParam of(PlanDetail planDetail) {
-		return PlanDetailUpdateParam.builder()
+	public static PlanDetailParam of(PlanDetail planDetail) {
+		return PlanDetailParam.builder()
 				.planDetailId(planDetail.getPlanDetailId())
 				.planId(planDetail.getPlan().getPlanId())
 				.contentId(planDetail.getAttraction().getContentId())

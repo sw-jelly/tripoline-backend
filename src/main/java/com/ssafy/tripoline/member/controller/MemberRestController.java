@@ -82,7 +82,7 @@ public class MemberRestController {
 				status = HttpStatus.UNAUTHORIZED;
 			}
 		} catch (Exception e) {
-			logger.debug("로그인 에러 발생 : {}", e);
+			logger.debug("로그인 에러 발생 : {}", e.getMessage());
 			resultMap.put("message", e.getMessage());
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
 		}

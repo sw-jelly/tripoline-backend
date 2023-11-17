@@ -4,16 +4,14 @@ import java.util.List;
 
 import com.ssafy.tripoline.plan.model.dto.Plan;
 import com.ssafy.tripoline.plan.model.dto.PlanDetail;
-import com.ssafy.tripoline.plan.model.dto.PlanDetailRegistParam;
-import com.ssafy.tripoline.plan.model.dto.PlanDetailUpdateParam;
+import com.ssafy.tripoline.plan.model.dto.PlanDetailParam;
 import com.ssafy.tripoline.plan.model.dto.PlanListDto;
-import com.ssafy.tripoline.plan.model.dto.PlanRegistParam;
-import com.ssafy.tripoline.plan.model.dto.PlanUpdateParam;
+import com.ssafy.tripoline.plan.model.dto.PlanParam;
 
 public interface PlanService {
-	void createPlan(PlanRegistParam planParam);
+	Integer createPlan(PlanParam planParam);
 
-	void createPlanDetail(PlanDetailRegistParam planDetailParam);
+	Integer createPlanDetail(PlanDetailParam planDetailParam);
 	
 	Plan searchPlanById(int planId);
 	
@@ -29,9 +27,9 @@ public interface PlanService {
 
 	boolean canWriteReview(int planId);
 
-	void updatePlan(PlanUpdateParam planParam);
+	void updatePlan(PlanParam planParam);
 
-	void updatePlanDetail(PlanDetailUpdateParam planDetailParam);
+	void updatePlanDetail(PlanDetailParam planDetailParam);
 
 	void deletePlan(int planId);
 

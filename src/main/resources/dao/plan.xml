@@ -61,12 +61,12 @@
 	</resultMap>
 
 
-	<insert id="createPlan" parameterType="PlanRegistParam">
+	<insert id="createPlan" parameterType="PlanParam" useGeneratedKeys="true" keyProperty="planId">
 		insert into plans(start_date, end_date, sido_code, gugun_code, member_id, plan_title)
 		values (#{startDate}, #{endDate}, #{sidoCode}, #{gugunCode}, #{memberId}, #{planTitle})
 	</insert>
 	
-	<insert id="createPlanDetail" parameterType="PlanDetailRegistParam">
+	<insert id="createPlanDetail" parameterType="PlanDetailParam" useGeneratedKeys="true" keyProperty="planDetailId" >
 		insert into plan_detail(visit_date, visit_order, plan_id, content_id)
 		values (#{visitDate}, #{visitOrder}, #{planId}, #{contentId})
 	</insert>
@@ -163,14 +163,14 @@
 		where p.member_id = #{memberId}
 	</select>
 	
-	<update id="updatePlan" parameterType="java.util.Map">
+	<update id="updatePlan" parameterType="PlanParam">
 		update plans
 		set plan_title = #{planTitle}, start_date = #{startDate}, end_date = #{endDate},
 			sido_code = #{sidoCode}, gugun_code = #{gugunCode}
 		where plan_id = #{planId}
 	</update>
 
-	<update id="updatePlanDetail" parameterType="java.util.Map">
+	<update id="updatePlanDetail" parameterType="PlanDetailParam">
 		update plan_detail
 		set visit_date = #{visitDate}, visit_order = #{visitOrder}, plan_id = #{planId},
 			content_id = #{contentId}

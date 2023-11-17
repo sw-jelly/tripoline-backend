@@ -3,9 +3,7 @@ package com.ssafy.tripoline.plan.model.dao;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.sql.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.tripoline.plan.model.dto.Plan;
 import com.ssafy.tripoline.plan.model.dto.PlanDetail;
-import com.ssafy.tripoline.plan.model.dto.PlanDetailRegistParam;
-import com.ssafy.tripoline.plan.model.dto.PlanRegistParam;
+import com.ssafy.tripoline.plan.model.dto.PlanDetailParam;
+import com.ssafy.tripoline.plan.model.dto.PlanParam;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -35,7 +33,7 @@ class PlanDaoTest {
 
 	@Test
 	void testCreatePlan() throws Exception {
-		PlanRegistParam plan = PlanRegistParam.builder()
+		PlanParam plan = PlanParam.builder()
 				.memberId("gosjorb")
 				.planTitle("테스트 여행3")
 				.startDate(new Date(2023, 12, 1))
@@ -49,7 +47,7 @@ class PlanDaoTest {
 
 	@Test
 	void testCreatePlanDetail() throws Exception {
-		PlanDetailRegistParam planDetail = PlanDetailRegistParam.builder()
+		PlanDetailParam planDetail = PlanDetailParam.builder()
 				.planId(1)
 				.contentId(126486)
 				.visitDate(new Date(2023, 12, 1))

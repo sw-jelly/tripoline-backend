@@ -10,10 +10,10 @@ import lombok.NonNull;
 @Data
 public class Member implements Serializable {
 	@ApiParam(value = "회원 아이디", required = true)
-	@NonNull // 필수속성 지정
+//	@NonNull // 필수속성 지정
 	private String memberId;
 
-	@NonNull // 필수속성 지정
+//	@NonNull // 필수속성 지정
 	@ApiParam(value = "사용자 비밀번호", required = true)
 	private String memberPassword;
 
