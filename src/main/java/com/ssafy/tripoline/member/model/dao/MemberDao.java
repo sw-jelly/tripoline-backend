@@ -29,5 +29,8 @@ public interface MemberDao {
 	void deleteRefreshToken(Map<String, String> map) throws SQLException;
 
 	Member userInfo(String userId) throws SQLException;
+	
+    void insertProfilePicture(Map<String, Object> params);
+
 
 }

@@ -1,83 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-    
-    
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
 <!-- namespace에는 Dao의 패키지명 포함한 인터페이스명과 동일하게 선언해야 
 	 mybatis-spring이 Dao에 대한 구현체를 자동으로 생성한다.
 -->
-<mapper namespace="com.ssafy.tripoline.member.model.dao.MemberDao">    <!--  <== 페키지명만 쓰고 인터페이스명을 안쓰면 오류!!!! 자주하는 실수중 하나임 -->
-<!-- 사용가능한 태그명 <insert> <delete> <select> <update> executeUpdate 되는건 동일하지만 구분을 위해서 사용 -->
-<!-- parameter타입으로는 1개만 올 수 있음, 여러개를 사용하고싶다면 Dto를 만들거나 Map을 사용해야함 
+<mapper namespace="com.ssafy.tripoline.member.model.dao.MemberDao">    <!--  <==
+	페키지명만 쓰고 인터페이스명을 안쓰면 오류!!!! 자주하는 실수중 하나임 -->
+	<!-- 사용가능한 태그명 <insert> <delete> <select> <update> executeUpdate 되는건 동일하지만
+	구분을 위해서 사용 -->
+	<!-- parameter타입으로는 1개만 올 수 있음, 여러개를 사용하고싶다면 Dto를 만들거나 Map을 사용해야함 
 	 데이터가 1개일때는 바로써도 되지만 일반적으로 매핑시 #{속성명} 사용  
 -->
 	<resultMap type="Member" id="member">
-		<result column="member_id" property="memberId"/>
-		<result column="member_name" property="memberName"/>
-		<result column="member_email" property="memberEmail"/>
-		<result column="member_role" property="memberRole"/>
-		<result column="member_phone" property="memberPhone"/>
-		<result column="member_photo" property="memberPhoto"/>
-		<result column="member_birthdate" property="memberBirthdate"/>
-		<result column="sido_code" property="sidoCode"/>
+		<result column="member_id" property="memberId" />
+		<result column="member_name" property="memberName" />
+		<result column="member_email" property="memberEmail" />
+		<result column="member_role" property="memberRole" />
+		<result column="member_phone" property="memberPhone" />
+		<result column="member_photo" property="memberPhoto" />
+		<result column="member_birthdate" property="memberBirthdate" />
+		<result column="sido_code" property="sidoCode" />
 		<result column="gugun_code" property="gugunCode" />
-		<result column="token" property="refreshToken"/>
+		<result column="token" property="refreshToken" />
 	</resultMap>
-	
+
+
+	<update id="insertProfilePicture" parameterType="java.util.Map">
+		UPDATE  members set  member_photo = #{filePath}
+		WHERE member_id = #{memberId}
+	</update>
+
+
 	<select id="login" parameterType="String" resultMap="member">
-		select member_id, member_email, member_name, sido_code, gugun_code, member_photo, member_birthdate, member_gender, member_phone, member_role
+		select member_id, member_email, member_name, sido_code, gugun_code,
+		member_photo, member_birthdate, member_gender, member_phone, member_role
 		from members
-		where member_id=#{memberId} and  member_password=#{memberPassword}
+		where member_id=#{memberId} and member_password=#{memberPassword}
 	</select>
-	
+
 	<select id="userInfo" parameterType="string" resultMap="member">
-		select member_name, member_id, member_email, member_role member_phone,member_photo,	member_birthdate, sido_code, gugun_code
+		select member_name, member_id, member_email, member_role,
+		member_phone,member_photo, member_birthdate, sido_code, gugun_code
 		from members
 		where member_id=#{memberId}
 	</select>
-	
+
 	<update id="saveRefreshToken" parameterType="map">
 		update members
 		set token = #{token}
 		where member_id=#{memberId}
 	</update>
-	
+
 	<select id="getRefreshToken" parameterType="string" resultType="string">
 		select token
 		from members
 		where member_id=#{memberId}
 	</select>
-	
+
 	<update id="deleteRefreshToken" parameterType="map">
 		update members
 		set token = #{token, jdbcType=VARCHAR}
 		where member_id=#{memberId}
 	</update>
-	
+
 	<select id="findPassword" parameterType="String" resultType="String">
-	select member_password
-	from members
-	where member_id=#{memberId} and member_phone=#{memberPhone}
+		select member_password
+		from members
+		where member_id=#{memberId} and member_phone=#{memberPhone}
 	</select>
-	
+
 	<select id="search" parameterType="String" resultType="int">
-		select count(*)  
+		select count(*)
 		from members
 		where member_id=#{memberId}
 	</select>
-	
 
-	
+
 	<insert id="regist" parameterType="Member">
-		insert into members(member_id, member_password, member_name, member_email,  sido_code, gugun_code, member_photo, member_birthdate, member_gender, member_phone, member_role)
-		values (#{memberId}, #{memberPassword},#{memberName}, #{memberEmail}, #{sidoCode}, #{gugunCode}, #{memberPhoto}, #{memberBirthdate}, #{memberGender}, #{memberPhone}, #{memberRole})
+		insert into members(member_id, member_password, member_name,
+		member_email, sido_code, gugun_code, member_photo, member_birthdate,
+		member_gender, member_phone, member_role)
+		values (#{memberId}, #{memberPassword},#{memberName}, #{memberEmail},
+		#{sidoCode}, #{gugunCode}, #{memberPhoto}, #{memberBirthdate},
+		#{memberGender}, #{memberPhone}, #{memberRole})
 	</insert>
-	
+
 	<update id="update" parameterType="Member">
-		update members set member_name=#{memberName}, member_phone=#{memberPhone}, member_email=#{memberEmail},    sido_code=#{sidoCode}, gugun_code=#{gugunCode}, member_photo=#{memberPhoto},  member_role=#{memberRole}
+		update members set member_name=#{memberName},
+		member_phone=#{memberPhone}, member_email=#{memberEmail},
+		sido_code=#{sidoCode}, gugun_code=#{gugunCode},
+		member_photo=#{memberPhoto}, member_role=#{memberRole}
 		where member_id=#{memberId}
 	</update>
-		                                
+
 	<delete id="remove" parameterType="String">
 		delete from members
 		where member_id = #{memberId}

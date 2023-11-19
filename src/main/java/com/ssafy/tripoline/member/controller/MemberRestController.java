@@ -1,12 +1,16 @@
 package com.ssafy.tripoline.member.controller;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +23,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.tripoline.member.model.dto.FindRequest;
 import com.ssafy.tripoline.member.model.dto.LoginRequest;
@@ -32,11 +38,19 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
+import io.swagger.v3.oas.models.media.MediaType;
+import lombok.RequiredArgsConstructor;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 @RestController // Controller내에서 작성하는 모든 메서드에 기본적으로 @ResponseBody로 출력됨.
 @RequestMapping("/memberRest") // 요청하는 자원(Domain)명을 붙인다.
 @Api(value = "Member Rest API", description = "Member API 정보")
-@CrossOrigin(origins = { "*" }) // 다른 서버에서 Ajax 요청이 와도 서비스 되도록 설정
+@CrossOrigin(origins = "*") // 허용할 도메인을 명시
 //기본적으로 같은 서버, 같은 context(webApp) 끼리만 사용가능, 브라우저에서 prefly해주고 서버가 허용해줘야하는데 그것이 바로 crossOrigin
 public class MemberRestController {
 	private Logger logger = LoggerFactory.getLogger(MemberRestController.class);
@@ -49,11 +63,16 @@ public class MemberRestController {
 
 	private static final String Exist = "존재하는 사용자입니다";
 
+    @Value("${upload.path}")
+    private String uploadPath;
+	
 	public MemberRestController(MemberService memberService, JWTUtil jwtUtil) {
 		this.memberService = memberService;
 		this.jwtUtil = jwtUtil;
 	}
 
+
+	    
 	@ApiOperation(value = "회원 로그인", notes = "사용자의 로그인 요청 처리.")
 	@ApiResponse(code = 200, message = "success")
 	@PostMapping("/login")
@@ -89,6 +108,72 @@ public class MemberRestController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 
 	}
+	
+	@ApiOperation(value="회원사진 업로드", notes="회원의 사진을 업로드")
+	@PostMapping("/profileimage")
+    @CrossOrigin(origins = "*") // 요청을 허용할 도메인 명시
+	public ResponseEntity<String> handleProfilePictureUpload(
+            @RequestParam("formData") MultipartFile file,
+            @RequestParam("memberId") String memberId)  {
+		
+//        String userHome = System.getProperty("user.home");
+
+
+        if (file.isEmpty()) {
+            return ResponseEntity.badRequest().body("Please provide a file to upload");
+        }
+
+        try {
+            // 사용자 ID를 기반으로 저장 디렉토리 생성
+            String uploadDir = uploadPath + File.separator + memberId;
+            File uploadDirectory = new File(uploadDir);
+
+            
+            if (!uploadDirectory.exists()) {
+                if (uploadDirectory.mkdirs()) {
+                    System.out.println("Directory created successfully");
+                } else {
+                    System.err.println("Failed to create directory");
+                }
+            }
+
+            // 파일 이름 중복 방지를 위해 유니크한 파일명 생성
+            String fileName = file.getOriginalFilename();
+
+            // 파일 저장 경로 설정
+            File filePath = new File(uploadDir, fileName);
+            
+            
+            if (filePath.exists()) {
+                if (filePath.delete()) {
+                    System.out.println("Existing file deleted successfully");
+                } else {
+                    System.err.println("Failed to delete existing file");
+                }
+            }
+           
+            // 파일 복사
+            file.transferTo(filePath);
+
+            // 파일 URL 반환 또는 필요한 응답 처리
+            String fileUrl = "/tripoline/assets/img/" + memberId + "/" + fileName;
+
+            // 프로필 사진 정보를 데이터베이스에 저장
+            
+            try {
+				memberService.saveProfilePicture(memberId, fileName, fileUrl);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+	            return ResponseEntity.status(500).body("Failed to upload the file");
+			}
+            return ResponseEntity.ok(fileUrl);
+        } catch (IOException e) {
+            e.printStackTrace();
+            // 파일 업로드 중 오류가 발생하면 예외 처리
+            return ResponseEntity.status(500).body("Failed to upload the file");
+        }
+    }
 
 	@ApiOperation(value = "회원인증", notes = "회원 정보를 담은 Token을 반환한다.", response = Map.class)
 	@GetMapping("/info/{memberId}")

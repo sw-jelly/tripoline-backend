@@ -20,5 +20,6 @@ public interface MemberService {
 	Object getRefreshToken(String userId) throws Exception;
 	void deleRefreshToken(String userId) throws Exception;
 	Member userInfo(String userId) throws Exception;
-
+	
+	void  saveProfilePicture(String memberId, String fileName, String filePath) throws Exception;
 }

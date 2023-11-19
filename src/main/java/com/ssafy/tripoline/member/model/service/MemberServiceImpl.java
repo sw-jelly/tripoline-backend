@@ -135,6 +135,16 @@ public class MemberServiceImpl implements MemberService {
 		return dao.userInfo(memberId);
 	}
 
+	@Override
+	public void saveProfilePicture(String memberId, String fileName, String filePath) throws Exception {
+		
+	        Map<String, Object> params = new HashMap<>();
+	        params.put("memberId", memberId);
+	        params.put("fileName", fileName);
+	        params.put("filePath", filePath);
+	        dao.insertProfilePicture(params);
+	}
+
 
 	
 	
