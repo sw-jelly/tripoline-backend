@@ -24,7 +24,11 @@
 		<result column="gugun_code" property="gugunCode" />
 		<result column="token" property="refreshToken" />
 	</resultMap>
-
+	
+	<update id="registImage" parameterType="String">
+				UPDATE  members set  member_photo = #{imageurl}
+				WHERE member_id = #{memberId}
+	</update>
 
 	<update id="insertProfilePicture" parameterType="java.util.Map">
 		UPDATE  members set  member_photo = #{filePath}

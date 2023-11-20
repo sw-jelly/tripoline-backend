@@ -145,6 +145,11 @@ public class MemberServiceImpl implements MemberService {
 	        dao.insertProfilePicture(params);
 	}
 
+	@Override
+	public void saveImage(String memberId, String file) throws Exception {
+		dao.registImage(memberId, file);
+	}
+
 
 	
 	

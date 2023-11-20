@@ -22,4 +22,7 @@ public interface MemberService {
 	Member userInfo(String userId) throws Exception;
 	
 	void  saveProfilePicture(String memberId, String fileName, String filePath) throws Exception;
+	
+	void  saveImage(String memberId, String file) throws Exception;
+
 }

@@ -1,11 +1,8 @@
 package com.ssafy.tripoline.member.controller;
 
+import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +23,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -40,15 +38,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
-import io.swagger.v3.oas.models.media.MediaType;
-import lombok.RequiredArgsConstructor;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 
 @RestController // Controller내에서 작성하는 모든 메서드에 기본적으로 @ResponseBody로 출력됨.
 @RequestMapping("/memberRest") // 요청하는 자원(Domain)명을 붙인다.
@@ -65,19 +54,15 @@ public class MemberRestController {
 	private static final String SUCCESS = "success";
 
 	private static final String Exist = "존재하는 사용자입니다";
-	
 
+	@Value("${upload.path}")
+	private String uploadPath;
 
-    @Value("${upload.path}")
-    private String uploadPath;
-	
 	public MemberRestController(MemberService memberService, JWTUtil jwtUtil) {
 		this.memberService = memberService;
 		this.jwtUtil = jwtUtil;
 	}
 
-
-	    
 	@ApiOperation(value = "회원 로그인", notes = "사용자의 로그인 요청 처리.")
 	@ApiResponse(code = 200, message = "success")
 	@PostMapping("/login")
@@ -113,74 +98,89 @@ public class MemberRestController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 
 	}
-	
-	@ApiOperation(value="회원사진 업로드", notes="회원의 사진을 업로드")
+
+	@ApiOperation(value = "imgBB 경로 등록", notes = "회원의 사진 경로 업로드")
+	@ApiResponse(code = 200, message = "success")
+	@PutMapping("/imgbb")
+	@CrossOrigin(origins = "*") // 요청을 허용할 도메인 명시
+	public ResponseEntity<String> imgUpload(@RequestBody Map<String, String> data) {
+		String file = data.get("fileurl");
+		String id = data.get("memberId");
+		System.out.println("fileurl :" + file);
+		System.out.println("memberId:" + id);
+
+		try {
+			memberService.saveImage(id, file);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(500).body("Failed to upload the file");
+		}
+		return ResponseEntity.ok("정상적으로 등록완료");
+
+	}
+
+	@ApiOperation(value = "회원사진 업로드", notes = "회원의 사진을 업로드")
+	@ApiResponse(code = 200, message = "success")
 	@PostMapping("/profileimage")
-    @CrossOrigin(origins = "*") // 요청을 허용할 도메인 명시
-	public ResponseEntity<String> handleProfilePictureUpload(
-            @RequestParam("formData") MultipartFile file,
-            @RequestParam("memberId") String memberId)  {
-		
+	@CrossOrigin(origins = "*") // 요청을 허용할 도메인 명시
+	public ResponseEntity<String> handleProfilePictureUpload(@RequestParam("formData") MultipartFile file,
+			@RequestParam("memberId") String memberId) {
+
 //        String userHome = System.getProperty("user.home");
 
+		if (file.isEmpty()) {
+			return ResponseEntity.badRequest().body("Please provide a file to upload");
+		}
 
-        if (file.isEmpty()) {
-            return ResponseEntity.badRequest().body("Please provide a file to upload");
-        }
+		try {
+			// 사용자 ID를 기반으로 저장 디렉토리 생성
+			String uploadDir = uploadPath + File.separator + memberId;
+			File uploadDirectory = new File(uploadDir);
 
-        try {
-            // 사용자 ID를 기반으로 저장 디렉토리 생성
-            String uploadDir = uploadPath + File.separator + memberId;
-            File uploadDirectory = new File(uploadDir);
+			if (!uploadDirectory.exists()) {
+				if (uploadDirectory.mkdirs()) {
+					System.out.println("Directory created successfully");
+				} else {
+					System.err.println("Failed to create directory");
+				}
+			}
 
-            
-            if (!uploadDirectory.exists()) {
-                if (uploadDirectory.mkdirs()) {
-                    System.out.println("Directory created successfully");
-                } else {
-                    System.err.println("Failed to create directory");
-                }
-            }
+			// 파일 이름 중복 방지를 위해 유니크한 파일명 생성
+			String fileName = file.getOriginalFilename();
 
-            // 파일 이름 중복 방지를 위해 유니크한 파일명 생성
-            String fileName = file.getOriginalFilename();
+			// 파일 저장 경로 설정
+			File filePath = new File(uploadDir, fileName);
 
-            // 파일 저장 경로 설정
-            File filePath = new File(uploadDir, fileName);
-            
-            
-            if (filePath.exists()) {
-                if (filePath.delete()) {
-                    System.out.println("Existing file deleted successfully");
-                } else {
-                    System.err.println("Failed to delete existing file");
-                }
-            }
-            
+			if (filePath.exists()) {
+				if (filePath.delete()) {
+					System.out.println("Existing file deleted successfully");
+				} else {
+					System.err.println("Failed to delete existing file");
+				}
+			}
 
-           
-            // 파일 복사
-            file.transferTo(filePath);
+			// 파일 복사
+			file.transferTo(filePath);
 
-            // 파일 URL 반환 또는 필요한 응답 처리
-            String fileUrl = memberId + '/' + fileName;
+			// 파일 URL 반환 또는 필요한 응답 처리
+			String fileUrl = memberId + '/' + fileName;
 
-            // 프로필 사진 정보를 데이터베이스에 저장
-            
-            try {
+			// 프로필 사진 정보를 데이터베이스에 저장
+
+			try {
 				memberService.saveProfilePicture(memberId, fileName, fileUrl);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-	            return ResponseEntity.status(500).body("Failed to upload the file");
+				return ResponseEntity.status(500).body("Failed to upload the file");
 			}
-            return ResponseEntity.ok(fileUrl);
-        } catch (IOException e) {
-            e.printStackTrace();
-            // 파일 업로드 중 오류가 발생하면 예외 처리
-            return ResponseEntity.status(500).body("Failed to upload the file");
-        }
-    }
+			return ResponseEntity.ok(fileUrl);
+		} catch (IOException e) {
+			e.printStackTrace();
+			// 파일 업로드 중 오류가 발생하면 예외 처리
+			return ResponseEntity.status(500).body("Failed to upload the file");
+		}
+	}
 
 	@ApiOperation(value = "회원인증", notes = "회원 정보를 담은 Token을 반환한다.", response = Map.class)
 	@GetMapping("/info/{memberId}")
@@ -262,11 +262,10 @@ public class MemberRestController {
 		}
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
-	
+
 	@ApiOperation(value = "Access Token 재발급", notes = "만료된 access token을 재발급받는다.", response = Map.class)
 	@PostMapping("/refresh")
-	public ResponseEntity<?> refreshToken(@RequestBody Member member, HttpServletRequest request)
-			throws Exception {
+	public ResponseEntity<?> refreshToken(@RequestBody Member member, HttpServletRequest request) throws Exception {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
 		String token = request.getHeader("refreshToken");
