@@ -1,6 +1,8 @@
 package com.ssafy.tripoline.member.controller;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,6 +42,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.v3.oas.models.media.MediaType;
 import lombok.RequiredArgsConstructor;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -62,6 +65,8 @@ public class MemberRestController {
 	private static final String SUCCESS = "success";
 
 	private static final String Exist = "존재하는 사용자입니다";
+	
+
 
     @Value("${upload.path}")
     private String uploadPath;
@@ -151,12 +156,14 @@ public class MemberRestController {
                     System.err.println("Failed to delete existing file");
                 }
             }
+            
+
            
             // 파일 복사
             file.transferTo(filePath);
 
             // 파일 URL 반환 또는 필요한 응답 처리
-            String fileUrl = "/tripoline/assets/img/" + memberId + "/" + fileName;
+            String fileUrl = memberId + '/' + fileName;
 
             // 프로필 사진 정보를 데이터베이스에 저장
             
