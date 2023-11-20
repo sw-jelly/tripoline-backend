@@ -1,4 +1,4 @@
-package com.ssafy.tripoline.plan.model.dto;
+package com.ssafy.tripoline.plan.model.dto.Plan;
 
 import java.sql.Date;
 

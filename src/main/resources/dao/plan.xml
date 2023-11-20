@@ -39,6 +39,7 @@
 		<id column="plan_detail_id" property="planDetailId" />
 		<result column="visit_date" property="visitDate" />
 		<result column="visit_order" property="visitOrder" />
+		<result column="memo" property="memo" />
 
 		<association property="plan" resultMap="PlanMap" />
 
@@ -67,8 +68,8 @@
 	</insert>
 	
 	<insert id="createPlanDetail" parameterType="PlanDetailParam" useGeneratedKeys="true" keyProperty="planDetailId" >
-		insert into plan_detail(visit_date, visit_order, plan_id, content_id)
-		values (#{visitDate}, #{visitOrder}, #{planId}, #{contentId})
+		insert into plan_detail(visit_date, visit_order, plan_id, content_id, memo)
+		values (#{visitDate}, #{visitOrder}, #{planId}, #{contentId}, #{memo})
 	</insert>
 	
 	<select id="searchPlanById" parameterType="int" resultMap="PlanMap">
@@ -85,7 +86,7 @@
 	</select>
 
 	<select id="searchPlanDetailById" parameterType="int" resultMap="PlanDetailMap">
-		select pd.plan_detail_id, pd.visit_date, pd.visit_order, pd.plan_id, pd.content_id,
+		select pd.plan_detail_id, pd.visit_date, pd.visit_order, pd.plan_id, pd.content_id, pd.memo,
 		      p.plan_id, p.plan_title, p.start_date, p.end_date,
 		      m.member_id, m.member_password, m.member_email, m.member_name, m.sido_code as member_sido_code, 
 		      m.gugun_code as member_gugun_code, m.member_photo, m.member_birthdate, m.member_gender, m.member_phone, m.member_role,
@@ -115,7 +116,7 @@
 	</select>
 
 	<select id="searchAllPlanDetails" resultMap="PlanDetailMap">
-		select pd.plan_detail_id, pd.visit_date, pd.visit_order, pd.plan_id, pd.content_id,
+		select pd.plan_detail_id, pd.visit_date, pd.visit_order, pd.plan_id, pd.content_id, pd.memo,
 		      p.plan_id, p.plan_title, p.start_date, p.end_date,
 		      m.member_id, m.member_password, m.member_email, m.member_name, m.sido_code as member_sido_code, 
 		      m.gugun_code as member_gugun_code, m.member_photo, m.member_birthdate, m.member_gender, m.member_phone, m.member_role,
@@ -132,7 +133,7 @@
 	</select>
 
 	<select id="searchPlanDetailsByPlanId" parameterType="int" resultMap="PlanDetailMap">
-		select pd.plan_detail_id, pd.visit_date, pd.visit_order, pd.plan_id, pd.content_id,
+		select pd.plan_detail_id, pd.visit_date, pd.visit_order, pd.plan_id, pd.content_id, pd.memo,
 		      p.plan_id, p.plan_title, p.start_date, p.end_date,
 		      m.member_id, m.member_password, m.member_email, m.member_name, m.sido_code as member_sido_code, 
 		      m.gugun_code as member_gugun_code, m.member_photo, m.member_birthdate, m.member_gender, m.member_phone, m.member_role,
@@ -147,6 +148,7 @@
 		join sido s on s.sido_code = g.sido_code
 		join attraction_info a on pd.content_id = a.content_id
 		where pd.plan_id = #{planId}
+		order by visit_date, visit_order
 	</select>
 
 	<select id="searchPlansByMemberId" parameterType="String"
@@ -173,7 +175,7 @@
 	<update id="updatePlanDetail" parameterType="PlanDetailParam">
 		update plan_detail
 		set visit_date = #{visitDate}, visit_order = #{visitOrder}, plan_id = #{planId},
-			content_id = #{contentId}
+			content_id = #{contentId}, memo = #{memo}
 		where plan_detail_id = #{planDetailId}
 	</update>
 	

@@ -17,11 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.tripoline.TripolineException;
-import com.ssafy.tripoline.plan.model.dto.Plan;
-import com.ssafy.tripoline.plan.model.dto.PlanDetail;
-import com.ssafy.tripoline.plan.model.dto.PlanDetailParam;
-import com.ssafy.tripoline.plan.model.dto.PlanListDto;
-import com.ssafy.tripoline.plan.model.dto.PlanParam;
+import com.ssafy.tripoline.plan.model.dto.Plan.Plan;
+import com.ssafy.tripoline.plan.model.dto.Plan.PlanInfoDto;
+import com.ssafy.tripoline.plan.model.dto.Plan.PlanListDto;
+import com.ssafy.tripoline.plan.model.dto.Plan.PlanParam;
+import com.ssafy.tripoline.plan.model.dto.PlanDetail.PlanDetail;
+import com.ssafy.tripoline.plan.model.dto.PlanDetail.PlanDetailListDto;
+import com.ssafy.tripoline.plan.model.dto.PlanDetail.PlanDetailParam;
 import com.ssafy.tripoline.plan.model.service.PlanService;
 
 import io.swagger.annotations.Api;
@@ -44,6 +46,7 @@ public class PlanRestController {
 
 	private static final String SUCCESS = "success";
 	
+	
 	@ApiOperation(value = "새 계획 등록하기")
 	@ApiResponse(code = 200, message = "success")
 	@PostMapping("/plan")
@@ -53,12 +56,21 @@ public class PlanRestController {
 		return new ResponseEntity<>(generatedKey, HttpStatus.CREATED);
 	}
 	
-	@ApiOperation(value = "새 여행 계획 세부 사항 등록하기")
+//	@ApiOperation(value = "새 여행 계획 세부 사항 등록하기")
+//	@ApiResponse(code = 200, message = "success")
+//	@PostMapping("/planDetail")
+//	public ResponseEntity<?> registPlanDetail(@RequestBody PlanDetailParam planDetailParam) {
+//		log.debug("PlanDetail.regist.............................planDetailParam : {}", planDetailParam);
+//		Integer generatedKey = planService.createPlanDetail(planDetailParam);
+//		return new ResponseEntity<>(generatedKey, HttpStatus.CREATED);
+//	}
+	
+	@ApiOperation(value = "여행 계획 세부 사항 등록, 수정하기")
 	@ApiResponse(code = 200, message = "success")
 	@PostMapping("/planDetail")
-	public ResponseEntity<?> registPlanDetail(@RequestBody PlanDetailParam planDetailParam) {
-		log.debug("PlanDetail.regist.............................planDetailParam : {}", planDetailParam);
-		Integer generatedKey = planService.createPlanDetail(planDetailParam);
+	public ResponseEntity<?> save(@RequestBody PlanDetailParam planDetailParam) {
+		log.debug("PlanDetail.save.............................planDetailParam : {}", planDetailParam);
+		Integer generatedKey = planService.savePlanDetail(planDetailParam);
 		return new ResponseEntity<>(generatedKey, HttpStatus.CREATED);
 	}
 	
@@ -67,10 +79,10 @@ public class PlanRestController {
 	@GetMapping("/plan/{planId}")
 	public ResponseEntity<?> getPlanById(@PathVariable int planId) {
 		log.debug("Plan.searchPlanById.............................planId : {}", planId);
-		Plan plan = planService.searchPlanById(planId);
+		PlanInfoDto plan = planService.searchPlanById(planId);
 		
 		if (plan != null) {
-			return new ResponseEntity<Plan>(plan, HttpStatus.OK);
+			return new ResponseEntity<PlanInfoDto>(plan, HttpStatus.OK);
 		}
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}
@@ -121,10 +133,10 @@ public class PlanRestController {
 	@GetMapping("/planDetail/plan/{planId}")
 	public ResponseEntity<?> getPlanDetails(@PathVariable int planId) {
 		log.debug("plan.searchPlanDetailsByPlanId..............planId : {}", planId);
-		List<PlanDetail> planDetails = planService.searchPlanDetailsByPlanId(planId);
+		List<PlanDetailListDto> planDetails = planService.searchPlanDetailsByPlanId(planId);
 		
 		if (planDetails != null && !planDetails.isEmpty()) {
-			return new ResponseEntity<List<PlanDetail>>(planDetails, HttpStatus.OK);
+			return new ResponseEntity<List<PlanDetailListDto>>(planDetails, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 		}

@@ -2,18 +2,22 @@ package com.ssafy.tripoline.plan.model.service;
 
 import java.util.List;
 
-import com.ssafy.tripoline.plan.model.dto.Plan;
-import com.ssafy.tripoline.plan.model.dto.PlanDetail;
-import com.ssafy.tripoline.plan.model.dto.PlanDetailParam;
-import com.ssafy.tripoline.plan.model.dto.PlanListDto;
-import com.ssafy.tripoline.plan.model.dto.PlanParam;
+import com.ssafy.tripoline.plan.model.dto.Plan.Plan;
+import com.ssafy.tripoline.plan.model.dto.Plan.PlanInfoDto;
+import com.ssafy.tripoline.plan.model.dto.Plan.PlanListDto;
+import com.ssafy.tripoline.plan.model.dto.Plan.PlanParam;
+import com.ssafy.tripoline.plan.model.dto.PlanDetail.PlanDetail;
+import com.ssafy.tripoline.plan.model.dto.PlanDetail.PlanDetailListDto;
+import com.ssafy.tripoline.plan.model.dto.PlanDetail.PlanDetailParam;
 
 public interface PlanService {
 	Integer createPlan(PlanParam planParam);
 
 	Integer createPlanDetail(PlanDetailParam planDetailParam);
 	
-	Plan searchPlanById(int planId);
+	Integer savePlanDetail(PlanDetailParam planDetailParam);
+	
+	PlanInfoDto searchPlanById(int planId);
 	
 	PlanDetail searchPlanDetailById(int planDetailId);
 	
@@ -21,7 +25,7 @@ public interface PlanService {
 	
 	List<PlanDetail> searchAllPlanDetails();
 
-	List<PlanDetail> searchPlanDetailsByPlanId(int planId);
+	List<PlanDetailListDto> searchPlanDetailsByPlanId(int planId);
 
 	List<PlanListDto> searchPlansByMemberId(String memberId);
 

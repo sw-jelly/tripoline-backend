@@ -1,4 +1,4 @@
-package com.ssafy.tripoline.plan.model.dto;
+package com.ssafy.tripoline.plan.model.dto.PlanDetail;
 
 import java.sql.Date;
 
@@ -14,6 +14,7 @@ public class PlanDetailParam {
 	int contentId;
 	Date visitDate;
 	int visitOrder;
+	String memo;
 
 	public static PlanDetailParam of(PlanDetail planDetail) {
 		return PlanDetailParam.builder()
@@ -22,6 +23,7 @@ public class PlanDetailParam {
 				.contentId(planDetail.getAttraction().getContentId())
 				.visitDate(planDetail.getVisitDate())
 				.visitOrder(planDetail.getVisitOrder())
+				.memo(planDetail.getMemo())
 				.build();
 				
 	}

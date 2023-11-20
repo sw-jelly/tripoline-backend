@@ -5,10 +5,10 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.ssafy.tripoline.plan.model.dto.Plan;
-import com.ssafy.tripoline.plan.model.dto.PlanDetail;
-import com.ssafy.tripoline.plan.model.dto.PlanDetailParam;
-import com.ssafy.tripoline.plan.model.dto.PlanParam;
+import com.ssafy.tripoline.plan.model.dto.Plan.Plan;
+import com.ssafy.tripoline.plan.model.dto.Plan.PlanParam;
+import com.ssafy.tripoline.plan.model.dto.PlanDetail.PlanDetail;
+import com.ssafy.tripoline.plan.model.dto.PlanDetail.PlanDetailParam;
 
 @Mapper
 public interface PlanDao {
@@ -30,9 +30,9 @@ public interface PlanDao {
 
 	boolean canWriteReview(int planId) throws SQLException;
 
-	void updatePlan(PlanParam planUpdateParam) throws SQLException;
+	void updatePlan(PlanParam planParam) throws SQLException;
 
-	void updatePlanDetail(PlanDetailParam planDatailUpdateParam) throws SQLException;
+	void updatePlanDetail(PlanDetailParam planDatailParam) throws SQLException;
 
 	void deletePlan(int planId) throws SQLException;
 
