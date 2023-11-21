@@ -18,6 +18,8 @@ public class PlanDetailListDto {
 	private String addr1;
 	private String firstImage;
 	private String memo;
+	private double latitude;
+	private double longitude;
 	
 	
 	public static PlanDetailListDto of(PlanDetail planDetail) {
@@ -32,6 +34,8 @@ public class PlanDetailListDto {
 				.addr1(planDetail.getAttraction().getAddr1())
 				.firstImage(planDetail.getAttraction().getFirstImage())
 				.memo(planDetail.getMemo())
+				.latitude(planDetail.getAttraction().getLatitude())
+				.longitude(planDetail.getAttraction().getLongitude())
 				.build();
 	}
 }
