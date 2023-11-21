@@ -3,6 +3,7 @@ package com.ssafy.tripoline.member.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +24,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,6 +31,8 @@ import com.ssafy.tripoline.member.model.dto.FindRequest;
 import com.ssafy.tripoline.member.model.dto.LoginRequest;
 import com.ssafy.tripoline.member.model.dto.Member;
 import com.ssafy.tripoline.member.model.dto.MemberException;
+import com.ssafy.tripoline.member.model.dto.MemberInfo;
+import com.ssafy.tripoline.member.model.dto.MemberBean;
 import com.ssafy.tripoline.member.model.service.MemberService;
 import com.ssafy.tripoline.util.JWTUtil;
 
@@ -223,6 +225,34 @@ public class MemberRestController {
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}
 
+	@ApiOperation(value = "전체 게시글 목록 조회", notes = "전체 게시글을 조회하는 API")
+	/**
+	 * ResponseEntity 응답 코드 + 응답 데이터를 전송하기 위한 객체
+	 * 
+	 * @param bean
+	 * @return
+	 */
+	@GetMapping("/searchAll")
+	public ResponseEntity<?> searchAll(MemberBean bean) {
+		List<MemberInfo> members = null;
+		try {
+			members = memberService.searchAll(bean);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>("처리 중 오류가 발생하였습니다", HttpStatus.BAD_REQUEST);
+		}
+		logger.debug("board.searchAll............bean:{}", members);
+		logger.debug("board.searchAll............bean:{}", bean);
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("members", members);
+		result.put("page", bean);
+
+		if (members != null && !members.isEmpty()) {
+			return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+		}
+	}
 	// 충돌방지를 위해 pathVariable로 param을 전달, pathVariable로 주는 데이터는 생략 불가
 	@ApiOperation(value = "사용자의 정보로 비밀번호 조회", notes = "사용자의 정보(아이디와 연락처)를 이용해 비밀번호를 찾아주는 API")
 	@PostMapping("/find")

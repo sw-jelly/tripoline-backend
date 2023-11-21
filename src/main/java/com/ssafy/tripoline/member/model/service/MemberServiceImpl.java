@@ -2,13 +2,18 @@ package com.ssafy.tripoline.member.model.service;
 
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.ssafy.tripoline.board.model.dto.BoardException;
 import com.ssafy.tripoline.member.model.dao.MemberDao;
 import com.ssafy.tripoline.member.model.dto.Member;
 import com.ssafy.tripoline.member.model.dto.MemberException;
+import com.ssafy.tripoline.member.model.dto.MemberInfo;
+import com.ssafy.tripoline.member.model.dto.MemberBean;
+import com.ssafy.tripoline.util.PageUtility;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -148,6 +153,21 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void saveImage(String memberId, String file) throws Exception {
 		dao.registImage(memberId, file);
+	}
+
+	@Override
+	public List<MemberInfo> searchAll(MemberBean bean) throws Exception {
+		System.out.println("게시글 searchAll 수행 중...............");
+		try {
+			int total = dao.totalCount(bean);
+			PageUtility page = new PageUtility(bean.getInterval(), total, bean.getPageNo(), null);
+			bean.setPageLink(page.getPageBar());
+			bean.setTotal(total);
+			return dao.searchMembers(bean);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new BoardException("전체 유저 목록 정보 조회 중 오류 발생");
+		}
 	}
 
 

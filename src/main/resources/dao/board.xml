@@ -23,30 +23,20 @@
 		property="fileInfos" column="article_id" javaType="list" ofType="fileInfoDto" 
 		select="fileInfoList"/> </resultMap> -->
 
-<!-- 
-	<resultMap type="Article" id="viewArticle" extends="ArticleDto">
-		<collection property="fileInfos" column="article_no" javaType="list" ofType="fileInfoDto" select="fileInfoList"/>
-	</resultMap>
-	
-	<resultMap type="fileInfoDto" id="file">
-		<result column="save_folder" property="saveFolder"/>
-		<result column="original_file" property="originalFile"/>
-		<result column="save_file" property="saveFile"/>
-	</resultMap>
-	
-	<insert id="registerFile" parameterType="boardDto">
-		insert into file_info (article_no, save_folder, original_file, save_file)
-		values
-		<foreach collection="fileInfos" item="fileinfo" separator=" , ">
-			(#{articleNo}, #{fileinfo.saveFolder}, #{fileinfo.originalFile}, #{fileinfo.saveFile})
-		</foreach>
-	</insert>
-	 -->
-	
-	
-	
-	
-	
+	<!-- <resultMap type="Article" id="viewArticle" extends="ArticleDto"> <collection 
+		property="fileInfos" column="article_no" javaType="list" ofType="fileInfoDto" 
+		select="fileInfoList"/> </resultMap> <resultMap type="fileInfoDto" id="file"> 
+		<result column="save_folder" property="saveFolder"/> <result column="original_file" 
+		property="originalFile"/> <result column="save_file" property="saveFile"/> 
+		</resultMap> <insert id="registerFile" parameterType="boardDto"> insert into 
+		file_info (article_no, save_folder, original_file, save_file) values <foreach 
+		collection="fileInfos" item="fileinfo" separator=" , "> (#{articleNo}, #{fileinfo.saveFolder}, 
+		#{fileinfo.originalFile}, #{fileinfo.saveFile}) </foreach> </insert> -->
+
+
+
+
+
 	<insert id="write" parameterType="Article">
 		insert into articles
 		(article_title, article_content, member_id, member_name,
@@ -74,21 +64,27 @@
 		</if>
 	</sql>
 
-    <select id="searchAll" parameterType="PageBean"
-        resultMap="ArticleDto">
-        select category_id, article_id, article_title, member_name, view_count,
-        like_count, register_time, update_time,
-        (SELECT COALESCE(COUNT(*), 0)
-        FROM comments
-        WHERE article_id = articles.article_id
-        ) AS comment_count
-        from articles
-        <where>
-            <include refid="searchCon"></include>
-        </where>
-        order by article_id desc
-        limit #{start}, #{interval}
-    </select>
+	<select id="searchAll" parameterType="PageBean"
+		resultMap="ArticleDto">
+		select category_id, article_id, article_title, member_name,
+		view_count,
+		like_count, register_time, update_time,
+		(SELECT COALESCE(COUNT(*), 0)
+		FROM comments
+		WHERE article_id = articles.article_id
+		) AS comment_count
+		from articles
+		<where>
+			<include refid="searchCon"></include>
+		</where>
+		order by
+		CASE
+		WHEN category_id = 2 THEN 0 -- prioritize category_id = 2
+		ELSE 1
+		END,
+		article_id DESC
+		limit #{start}, #{interval}
+	</select>
 
 	<select id="totalCount" parameterType="PageBean"
 		resultType="int">
@@ -119,14 +115,16 @@
 
 	<select id="getBestAll" parameterType="PageBean"
 		resultMap="ArticleDto">
-		select category_id, article_id, article_title, member_name, view_count,
-        like_count, register_time, update_time, (SELECT COALESCE(COUNT(*), 0)
-        FROM comments
-        WHERE article_id = articles.article_id
-        ) AS comment_count
+		select category_id, article_id, article_title, member_name,
+		view_count,
+		like_count, register_time, update_time, (SELECT COALESCE(COUNT(*), 0)
+		FROM comments
+		WHERE article_id = articles.article_id
+		) AS comment_count
 		from articles
-		where view_count >= 20 or like_count >= 6
-		
+		where view_count >= 20 or like_count >=
+		6
+
 		<where>
 			<include refid="searchCon"></include>
 		</where>
@@ -141,11 +139,12 @@
 
 	<select id="searchByCategory" parameterType="java.util.Map"
 		resultMap="ArticleDto">
-		select category_id, article_id, article_title, member_name, view_count,
-        like_count, register_time, update_time, (SELECT COALESCE(COUNT(*), 0)
-        FROM comments
-        WHERE article_id = articles.article_id
-        ) AS comment_count
+		select category_id, article_id, article_title, member_name,
+		view_count,
+		like_count, register_time, update_time, (SELECT COALESCE(COUNT(*), 0)
+		FROM comments
+		WHERE article_id = articles.article_id
+		) AS comment_count
 		from articles
 		where category_id=#{categoryId}
 		<where>

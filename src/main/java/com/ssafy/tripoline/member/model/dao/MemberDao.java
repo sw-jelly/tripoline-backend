@@ -1,11 +1,14 @@
 package com.ssafy.tripoline.member.model.dao;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
 import com.ssafy.tripoline.member.model.dto.Member;
+import com.ssafy.tripoline.member.model.dto.MemberInfo;
+import com.ssafy.tripoline.member.model.dto.MemberBean;
 
 @Mapper
 public interface MemberDao {
@@ -33,5 +36,9 @@ public interface MemberDao {
 	void insertProfilePicture(Map<String, Object> params) throws SQLException;
 
 	void registImage(String memberId, String imageurl) throws SQLException;
+	
+	int totalCount(MemberBean bean) throws SQLException;
+	
+	List<MemberInfo> searchMembers(MemberBean bean) throws SQLException;
 
 }
