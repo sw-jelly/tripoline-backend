@@ -91,7 +91,7 @@
 		      m.member_id, m.member_password, m.member_email, m.member_name, m.sido_code as member_sido_code, 
 		      m.gugun_code as member_gugun_code, m.member_photo, m.member_birthdate, m.member_gender, m.member_phone, m.member_role,
 		      s.sido_code, s.sido_name, g.gugun_code, g.gugun_name,
-		      a.content_type_id, a.title, a.addr1, a.addr2, a.zipcode, a.tel, a.first_image,
+		      a.content_id, a.content_type_id, a.title, a.addr1, a.addr2, a.zipcode, a.tel, a.first_image,
 		      a.first_image2, a.sido_code as attraction_sido_code, a.gugun_code as attraction_gugun_code, 
 		      a.latitude, a.longitude, a.overview
 		from plan_detail pd
@@ -121,7 +121,7 @@
 		      m.member_id, m.member_password, m.member_email, m.member_name, m.sido_code as member_sido_code, 
 		      m.gugun_code as member_gugun_code, m.member_photo, m.member_birthdate, m.member_gender, m.member_phone, m.member_role,
 		      s.sido_code, s.sido_name, g.gugun_code, g.gugun_name,
-		      a.content_type_id, a.title, a.addr1, a.addr2, a.zipcode, a.tel, a.first_image,
+		      a.content_id, a.content_type_id, a.title, a.addr1, a.addr2, a.zipcode, a.tel, a.first_image,
 		      a.first_image2, a.sido_code as attraction_sido_code, a.gugun_code as attraction_gugun_code, 
 		      a.latitude, a.longitude, a.overview
 		from plan_detail pd
@@ -138,7 +138,7 @@
 		      m.member_id, m.member_password, m.member_email, m.member_name, m.sido_code as member_sido_code, 
 		      m.gugun_code as member_gugun_code, m.member_photo, m.member_birthdate, m.member_gender, m.member_phone, m.member_role,
 		      s.sido_code, s.sido_name, g.gugun_code, g.gugun_name,
-		      a.content_type_id, a.title, a.addr1, a.addr2, a.zipcode, a.tel, a.first_image,
+		      a.content_id, a.content_type_id, a.title, a.addr1, a.addr2, a.zipcode, a.tel, a.first_image,
 		      a.first_image2, a.sido_code as attraction_sido_code, a.gugun_code as attraction_gugun_code, 
 		      a.latitude, a.longitude, a.overview
 		from plan_detail pd

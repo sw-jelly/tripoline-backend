@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.tripoline.favorite.model.dao.FavoriteDao">
+	<resultMap type="Favorite" id="FavoriteMap">
+		<id column="favorite_id" property="favoriteId" />
+
+		<association property="member" javaType="Member">
+			<id column="member_id" property="memberId" />
+			<result column="member_password" property="memberPassword" />
+			<result column="member_email" property="memberEmail" />
+			<result column="member_name" property="memberName" />
+			<result column="member_sido_code" property="sidoCode" />
+			<result column="member_gugun_code" property="gugunCode" />
+			<result column="member_photo" property="memberPhoto" />
+			<result column="member_birthdate" property="memberBirthdate" />
+			<result column="member_gender" property="memberGender" />
+			<result column="member_phone" property="memberPhone" />
+			<result column="member_role" property="memberRole" />
+		</association>
+
+		<association property="attraction" javaType="Attraction">
+			<id column="content_id" property="contentId" />
+			<result column="content_type_id" property="contentTypeId" />
+			<result column="title" property="title" />
+			<result column="addr1" property="addr1" />
+			<result column="addr2" property="addr2" />
+			<result column="zipcode" property="zipcode" />
+			<result column="tel" property="tel" />
+			<result column="first_image" property="firstImage" />
+			<result column="first_image2" property="firstImage2" />
+			<result column="attraction_sido_code" property="sidoCode" />
+			<result column="attraction_gugun_code" property="gugunCode" />
+			<result column="latitude" property="latitude" />
+			<result column="longitude" property="longitude" />
+			<result column="overview" property="overview" />
+		</association>
+	</resultMap>
+
+	<insert id="createFavorite" parameterType="FavoriteParam" useGeneratedKeys="true" keyProperty="favoriteId">
+		insert into favorites(member_id, content_id)
+		values (#{memberId}, #{contentId})
+	</insert>
+	
+	<select id="searchFavoriteById" parameterType="int" resultMap="FavoriteMap">
+		select favorite_id,
+		m.member_id,  m.member_password, m.member_email, m.member_name, m.sido_code as member_sido_code, 
+		m.gugun_code as member_gugun_code, m.member_photo, m.member_birthdate, m.member_gender, m.member_phone, m.member_role,
+		a.content_id, a.content_type_id, a.title, a.addr1, a.addr2, a.zipcode, a.tel, a.first_image,
+		a.first_image2, a.sido_code as attraction_sido_code, a.gugun_code as attraction_gugun_code, 
+		a.latitude, a.longitude, a.overview
+		from favorites f
+		join members m on f.member_id = m.member_id
+		join attraction_info a on f.content_id = a.content_id
+		where f.favorite_id = #{favoriteId}
+	</select>
+	
+	<select id="getFavoritesByMemberId" parameterType="String" resultMap="FavoriteMap">
+		select favorite_id,
+		m.member_id,  m.member_password, m.member_email, m.member_name, m.sido_code as member_sido_code, 
+		m.gugun_code as member_gugun_code, m.member_photo, m.member_birthdate, m.member_gender, m.member_phone, m.member_role,
+		a.content_id, a.content_type_id, a.title, a.addr1, a.addr2, a.zipcode, a.tel, a.first_image,
+		a.first_image2, a.sido_code as attraction_sido_code, a.gugun_code as attraction_gugun_code, 
+		a.latitude, a.longitude, a.overview
+		from favorites f
+		join members m on f.member_id = m.member_id
+		join attraction_info a on f.content_id = a.content_id
+		where f.member_id = #{memberId}
+	</select>
+	
+	<select id="getFavoriteCountByContentId" parameterType="int" resultType="int">
+		select count(*)
+		from favorites f
+		join attraction_info a on f.content_id = a.content_id
+		where a.content_id = #{contentId}
+	</select>
+	
+	<select id="getAllFavorites" resultMap="FavoriteMap">
+		select favorite_id,
+		m.member_id,  m.member_password, m.member_email, m.member_name, m.sido_code as member_sido_code, 
+		m.gugun_code as member_gugun_code, m.member_photo, m.member_birthdate, m.member_gender, m.member_phone, m.member_role,
+		a.content_id, a.content_type_id, a.title, a.addr1, a.addr2, a.zipcode, a.tel, a.first_image,
+		a.first_image2, a.sido_code as attraction_sido_code, a.gugun_code as attraction_gugun_code, 
+		a.latitude, a.longitude, a.overview
+		from favorites f
+		join members m on f.member_id = m.member_id
+		join attraction_info a on f.content_id = a.content_id
+	</select>
+	
+	<update id="updateFavorite" parameterType="FavoriteParam">
+		update favorites
+		set member_id = #{memberId}, content_id = #{contentId}
+		where favorite_id = #{favoriteId}
+	</update>
+	
+	<delete id="deleteFavorite" parameterType="int">
+		delete from favorites
+		where favorite_id = #{favoriteId}
+	</delete>
+</mapper>    
