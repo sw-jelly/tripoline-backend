@@ -16,4 +16,6 @@ public interface AttractionService {
 	List<Sido> searchSido();
 	
 	List<Gugun> searchGugun(int sidoCode);
+	
+	List<Attraction> getAttractionsSortedByLikeCount();
 }

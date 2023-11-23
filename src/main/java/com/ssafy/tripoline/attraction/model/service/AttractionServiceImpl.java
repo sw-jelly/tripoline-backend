@@ -77,4 +77,14 @@ public class AttractionServiceImpl implements AttractionService {
 		}
 	}
 
+	@Override
+	public List<Attraction> getAttractionsSortedByLikeCount() {
+		try {
+			return dao.getAttractionsSortedByLikeCount();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new TripolineException("핫플레이스 조회 중 오류 발생");
+		}
+	}
+
 }

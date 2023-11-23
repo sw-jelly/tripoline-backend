@@ -24,8 +24,6 @@
 		<result column="token" property="refreshToken" />
 	</resultMap>
 
-
-
 	<resultMap type="MemberInfo" id="memberInfo">
 		<result column="member_id" property="memberId" />
 		<result column="member_name" property="memberName" />
@@ -34,7 +32,6 @@
 		<result column="member_phone" property="memberPhone" />
 		<result column="member_gender" property="memberGender" />
 	</resultMap>
-
 
 	<update id="registImage" parameterType="String">
 		UPDATE members set
@@ -47,7 +44,6 @@
 		set member_photo = #{filePath}
 		WHERE member_id = #{memberId}
 	</update>
-
 
 	<select id="login" parameterType="String" resultMap="member">
 		select
@@ -120,12 +116,6 @@
 		where member_id=#{memberId}
 	</select>
 
-
-
-
-
-
-
 	<insert id="regist" parameterType="Member">
 		insert into members(member_id,
 		member_password, member_name,
@@ -147,7 +137,6 @@
 		member_email=#{memberEmail},
 		sido_code=#{sidoCode},
 		gugun_code=#{gugunCode},
-		member_photo=#{memberPhoto},
 		member_role=#{memberRole}
 		where member_id=#{memberId}
 	</update>

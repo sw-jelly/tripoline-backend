@@ -21,4 +21,6 @@ public interface AttractionDao {
 	List<Sido> searchSido() throws SQLException;
 	
 	List<Gugun> searchGugun(int sidoCode) throws SQLException;
+	
+	List<Attraction> getAttractionsSortedByLikeCount() throws SQLException;
 }

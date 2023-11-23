@@ -73,4 +73,18 @@
 		from gugun
 		where sido_code = #{sidoCode}
 	</select>
-</mapper>    
+	
+	<select id="getAttractionsSortedByLikeCount" resultMap="AttractionDto">
+		select a.content_id, content_type_id, title, addr1, 
+				addr2, zipcode, tel, first_image ,first_image2,
+				sido_code, gugun_code, latitude, longitude, overview
+		from attraction_info a
+		join (
+			select content_id, count(*) as like_count
+			from favorites
+			group by content_id
+			having like_count > 0
+		) f on a.content_id = f.content_id
+		order by f.like_count desc
+	</select>
+</mapper>
