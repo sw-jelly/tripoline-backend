@@ -85,6 +85,18 @@ public class FavoriteRestContoller {
 	    return new ResponseEntity<Integer>(count, HttpStatus.OK);
 	}
 	
+    @ApiOperation(value = "특정 회원이 특정 관광지를 즐겨찾기 했는지 여부 확인")
+    @ApiResponse(code = 200, message = "success")
+    @GetMapping("/isFavorite/{memberId}/{contentId}")
+    public ResponseEntity<?> isFavoriteByMemberAndAttraction(
+            @PathVariable String memberId,
+            @PathVariable int contentId) {
+        log.debug("Favorite.isFavoriteByMemberAndAttraction.............................memberId : {}, contentId : {}", memberId, contentId);
+        boolean isFavorite = favoriteService.hasFavoriteByMemberAndAttraction(memberId, contentId);
+
+        return new ResponseEntity<>(isFavorite, HttpStatus.OK);
+    }
+	
 	@ApiOperation(value = "계획 삭제하기")
 	@ApiResponse(code = 200, message = "success")
 	@DeleteMapping("/{favoriteId}")

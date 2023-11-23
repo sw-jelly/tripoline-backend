@@ -14,6 +14,8 @@ public interface FavoriteService {
 	List<FavoriteListDto> getFavoritesByMemberId(String memberId);
 
 	List<Favorite> getAllFavorites();
+	
+	boolean hasFavoriteByMemberAndAttraction(String memberId, int contentId);
 
 	int getFavoriteCountByContentId(int contentId);
 

@@ -1,8 +1,9 @@
 package com.ssafy.tripoline.favorite.model.service;
 
 import java.sql.SQLException;
-
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -46,7 +47,9 @@ public class FavoriteServiceImpl implements FavoriteService {
 	@Override
 	public List<FavoriteListDto> getFavoritesByMemberId(String memberId) {
 		try {
-			return favoriteDao.getFavoritesByMemberId(memberId).stream().map(favorite -> FavoriteListDto.of(favorite))
+			return favoriteDao.getFavoritesByMemberId(memberId)
+					.stream()
+					.map(favorite -> FavoriteListDto.of(favorite))
 					.collect(Collectors.toList());
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -72,6 +75,21 @@ public class FavoriteServiceImpl implements FavoriteService {
 			e.printStackTrace();
 			throw new TripolineException("모든 즐겨찾기 조회 중 오류 발생");
 		}
+	}
+	
+	@Override
+	public boolean hasFavoriteByMemberAndAttraction(String memberId, int contentId) {
+        try {
+        	Map<String, Object> paramMap = new HashMap<>();
+        	paramMap.put("memberId", memberId);
+        	paramMap.put("contentId", contentId);
+        	System.out.println(paramMap);
+            int count = favoriteDao.hasFavoriteByMemberAndAttraction(paramMap);
+            return count > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new TripolineException("즐겨찾기 여부 확인 중 오류 발생");
+        }
 	}
 
 	/*

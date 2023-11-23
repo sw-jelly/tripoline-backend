@@ -2,6 +2,7 @@ package com.ssafy.tripoline.favorite.model.dao;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -23,4 +24,6 @@ public interface FavoriteDao {
 	void updateFavorite(FavoriteParam favoriteParam) throws SQLException;
 
 	void deleteFavorite(int favoriteId) throws SQLException;
+	
+	int hasFavoriteByMemberAndAttraction(Map<String, Object> paramMap) throws SQLException;
 }
