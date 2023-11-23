@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.ssafy.tripoline.attraction.model.dto.Attraction;
 import com.ssafy.tripoline.attraction.model.dto.Gugun;
+import com.ssafy.tripoline.attraction.model.dto.HotPlace;
 import com.ssafy.tripoline.attraction.model.dto.Sido;
 
 @Mapper
@@ -22,5 +23,5 @@ public interface AttractionDao {
 	
 	List<Gugun> searchGugun(int sidoCode) throws SQLException;
 	
-	List<Attraction> getAttractionsSortedByLikeCount() throws SQLException;
+	List<HotPlace> getAttractionsSortedByLikeCount() throws SQLException;
 }

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.tripoline.TripolineException;
 import com.ssafy.tripoline.attraction.model.dto.Attraction;
 import com.ssafy.tripoline.attraction.model.dto.Gugun;
+import com.ssafy.tripoline.attraction.model.dto.HotPlace;
 import com.ssafy.tripoline.attraction.model.dto.Sido;
 import com.ssafy.tripoline.attraction.model.service.AttractionService;
 
@@ -93,10 +94,10 @@ public class AttractionRestController {
 	@ApiOperation(value="좋아요 순위 순으로 정렬된 관광지 리스트 출력", notes = "favorites에 많이 등장한 순")
 	@GetMapping("/hotplace")
 	public ResponseEntity<?> getAttractionsSortedByLikeCount() {
-		List<Attraction> attractions = attractionService.getAttractionsSortedByLikeCount();
+		List<HotPlace> hotplaces = attractionService.getAttractionsSortedByLikeCount();
 		Map<String, Object> result = new HashMap<String, Object>();
-		result.put("hotplace", attractions);
-		if (attractions != null && !attractions.isEmpty()) {
+		result.put("hotplace", hotplaces);
+		if (hotplaces != null && !hotplaces.isEmpty()) {
 			return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);

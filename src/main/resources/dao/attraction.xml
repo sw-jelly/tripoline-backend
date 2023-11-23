@@ -5,7 +5,7 @@
 <mapper namespace="com.ssafy.tripoline.attraction.model.dao.AttractionDao">
 
 	<resultMap type="Attraction" id="AttractionDto">
-		<result column="content_id" property="contentId"/>
+		<id column="content_id" property="contentId"/>
 		<result column="content_type_id" property="contentTypeId"/>
 		<result column="title" property="title"/>
 		<result column="addr1" property="addr1"/>
@@ -19,6 +19,24 @@
 		<result column="latitude" property="latitude"/>
 		<result column="longitude" property="longitude"/>
 		<result column="overview" property="overview"/>
+	</resultMap>
+	
+	<resultMap type="HotPlace" id="HotPlaceDto">
+		<id column="content_id" property="contentId"/>
+		<result column="content_type_id" property="contentTypeId"/>
+		<result column="title" property="title"/>
+		<result column="addr1" property="addr1"/>
+		<result column="addr2" property="addr2"/>
+		<result column="zipcode" property="zipcode"/>
+		<result column="tel" property="tel"/>
+		<result column="first_image" property="firstImage"/>
+		<result column="first_image2" property="firstImage2"/>
+		<result column="sido_code" property="sidoCode"/>
+		<result column="gugun_code" property="gugunCode"/>
+		<result column="latitude" property="latitude"/>
+		<result column="longitude" property="longitude"/>
+		<result column="overview" property="overview"/>
+		<result column="like_count" property="likeCount"/>
 	</resultMap>
 
 	<select id="searchAll" resultMap="AttractionDto">
@@ -74,10 +92,8 @@
 		where sido_code = #{sidoCode}
 	</select>
 	
-	<select id="getAttractionsSortedByLikeCount" resultMap="AttractionDto">
-		select a.content_id, content_type_id, title, addr1, 
-				addr2, zipcode, tel, first_image ,first_image2,
-				sido_code, gugun_code, latitude, longitude, overview
+	<select id="getAttractionsSortedByLikeCount" resultMap="HotPlaceDto">
+		select a.content_id, title, addr1, tel, first_image, overview, f.like_count
 		from attraction_info a
 		join (
 			select content_id, count(*) as like_count

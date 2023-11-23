@@ -11,6 +11,7 @@ import com.ssafy.tripoline.TripolineException;
 import com.ssafy.tripoline.attraction.model.dao.AttractionDao;
 import com.ssafy.tripoline.attraction.model.dto.Attraction;
 import com.ssafy.tripoline.attraction.model.dto.Gugun;
+import com.ssafy.tripoline.attraction.model.dto.HotPlace;
 import com.ssafy.tripoline.attraction.model.dto.Sido;
 
 @Service
@@ -78,7 +79,7 @@ public class AttractionServiceImpl implements AttractionService {
 	}
 
 	@Override
-	public List<Attraction> getAttractionsSortedByLikeCount() {
+	public List<HotPlace> getAttractionsSortedByLikeCount() {
 		try {
 			return dao.getAttractionsSortedByLikeCount();
 		} catch (SQLException e) {

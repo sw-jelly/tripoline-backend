@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ssafy.tripoline.attraction.model.dto.Attraction;
 import com.ssafy.tripoline.attraction.model.dto.Gugun;
+import com.ssafy.tripoline.attraction.model.dto.HotPlace;
 import com.ssafy.tripoline.attraction.model.dto.Sido;
 
 public interface AttractionService {
@@ -17,5 +18,5 @@ public interface AttractionService {
 	
 	List<Gugun> searchGugun(int sidoCode);
 	
-	List<Attraction> getAttractionsSortedByLikeCount();
+	List<HotPlace> getAttractionsSortedByLikeCount();
 }
