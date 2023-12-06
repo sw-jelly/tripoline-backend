@@ -10,7 +10,7 @@ SSAFY 10기 OO반 최종프로젝트 최우수상 수상
 
 
 ## 시연영상 
-[시연영상](https://www.youtube.com/watch?v=XbaKYXYshVQ)
+[영상보기](https://www.youtube.com/watch?v=XbaKYXYshVQ)
 ### 타임라인
 - 프로젝트 소개 00:00 
 - 로그인, 회원가입 00:47 
