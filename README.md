@@ -68,10 +68,22 @@ Matter Most (소통 및 자료 공유)
 
 
 
-### 사용 API
+### 사용 API, 라이브러리
+tour api를 통한 관광 데이터 이용 
+
 <img width="248" alt="tourapi" src="https://github.com/JIINSUNG/EnjoyTripBackEnd/assets/49591292/c85d72c3-c3cc-46f6-b001-5bcf56908339">
+
+imgbb를 통한 사용자 프로필 및 게시판 사진 업로드 
+
 <img width="107" alt="imgbb" src="https://github.com/JIINSUNG/EnjoyTripBackEnd/assets/49591292/07a19395-3afa-4083-addf-838fa951e638">
+
+공공데이터 포털을 동안 관광 데이터 이용 
+
 <img width="228" alt="공공데이터" src="https://github.com/JIINSUNG/EnjoyTripBackEnd/assets/49591292/be7e17c6-d753-4cc6-93dd-286d57f4afbd">
+
+
+
+
 
 기상청 단기예보 서비스
 http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0
