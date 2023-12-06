@@ -158,5 +158,5 @@ http://api.data.go.kr/openapi/tn_pubr_public_trrsrt_api
 <img width="1047" alt="화면설계서3" src="https://github.com/JIINSUNG/EnjoyTripFrontEnd/assets/49591292/b02bdfef-26d1-48ad-a499-d63b9f203aa0">
 
 #### 문의 
-- SSAFY 10기 지인성 
-crm03008@gmail.com 
+- SSAFY 10기 지인성 crm03008@gmail.com 
+
