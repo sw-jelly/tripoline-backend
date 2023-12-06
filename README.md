@@ -42,18 +42,41 @@ SSAFY 10기 OO반 최종프로젝트 최우수상 수상
 - 챗봇 
 
 ## 사용한 기술 스택
+
 ### FrontEnd
 - Vue3
 - Axios
 - tailwind
 - bootstrap
+  
 ### BackEnd
 - SpringBoot
 - MyBatis
 - MySQL
 - Swagger
 
+### 형상관리, 협업 툴
+- Matter Most (소통 및 자료 공유) 
+- Git, GitLab (형상관리)
+
 ### 사용 API
+기상청 단기예보 서비스
+http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0
+
+한국전력공사 전기차충전소 운영정보
+https://infuser.odcloud.kr/api/stages/38249/api-docs?1653531202059
+
+한국관광공사 관광사진 정보
+http://apis.data.go.kr/B551011/PhotoGalleryService1
+
+한국관광공사 관광정보 서비스
+http://apis.data.go.kr/B551011/KorService1
+
+전국문화축제 표준 데이터
+[http://api.data.go.kr/openapi/tn_pubr_public_cltur_fstvl_api](https://www.data.go.kr/iim/api/selectAPIAcountView.do)
+
+전국관광지정보 표준데이터
+http://api.data.go.kr/openapi/tn_pubr_public_trrsrt_api
 
 
 #### 유스케이스 다이어그램
