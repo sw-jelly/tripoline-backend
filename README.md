@@ -50,14 +50,17 @@ SSAFY 10기 OO반 최종프로젝트 최우수상 수상
 
 - Axios
 
-<img width="627" alt="axios" src="https://github.com/JIINSUNG/EnjoyTripBackEnd/assets/49591292/d8ba361f-c7cc-49e1-b7a4-755cd974aeba">
+<img width="627" alt="biitstrap" src="https://github.com/JIINSUNG/EnjoyTripBackEnd/assets/49591292/574d2df2-dd52-4ac7-83c6-e2386520fa70](https://github.com/JIINSUNG/EnjoyTripBackEnd/assets/49591292/36c85dec-a8c9-4949-90b1-2819f1424885">
 
 - tailwind
 
 <img width="627" alt="tailwind" src="https://github.com/JIINSUNG/EnjoyTripBackEnd/assets/49591292/751eb223-72a6-46da-969f-a2c1b70a3cf4">
+
 - bootstrap
 
-<img width="627" alt="biitstrap" src="https://github.com/JIINSUNG/EnjoyTripBackEnd/assets/49591292/574d2df2-dd52-4ac7-83c6-e2386520fa70](https://github.com/JIINSUNG/EnjoyTripBackEnd/assets/49591292/36c85dec-a8c9-4949-90b1-2819f1424885">
+<img width="627" alt="axios" src="https://github.com/JIINSUNG/EnjoyTripBackEnd/assets/49591292/d8ba361f-c7cc-49e1-b7a4-755cd974aeba">
+
+
   
 ### BackEnd
 - SpringBoot
