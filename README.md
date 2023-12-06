@@ -50,7 +50,7 @@ SSAFY 10기 OO반 최종프로젝트 최우수상 수상
 
 - Axios
 
-<img width="627" alt="biitstrap" src="https://github.com/JIINSUNG/EnjoyTripBackEnd/assets/49591292/574d2df2-dd52-4ac7-83c6-e2386520fa70](https://github.com/JIINSUNG/EnjoyTripBackEnd/assets/49591292/36c85dec-a8c9-4949-90b1-2819f1424885">
+<img width="627" alt="biitstrap" src="https://github.com/JIINSUNG/EnjoyTripBackEnd/assets/49591292/2406901e-fad5-447c-94b3-c0ae4429a5a6">
 
 - tailwind
 
