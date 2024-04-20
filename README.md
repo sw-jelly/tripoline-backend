@@ -1,6 +1,9 @@
-# 관통프로젝트
-### 프로젝트이름 : EnjoyTrip (Tripoline)
-### 제출일: 2023.11.24일 
+# Tripoline
+```
+     어릴 때 즐겁게 타던 트램펄린처럼
+     신나는 여행을 돕는 서비스!
+```
+SSAFY 1학기 프로젝트 (2023.09 ~ 2023.11)
 
 ### 참여 페어
 - 지인성(조장), 양유경
@@ -8,156 +11,69 @@
 ### 성과 
 SSAFY 10기 OO반 최종프로젝트 최우수상 수상 
 
+<br>
 
 ## 시연영상 
 [영상보기](https://www.youtube.com/watch?v=XbaKYXYshVQ)
-### 타임라인
-- 프로젝트 소개 00:00 
-- 로그인, 회원가입 00:47 
-- 메인화면 및 기능 간략 소개 01:20
-- 챗봇 03:08 
-- 공지사항 03:46 
-- 게시판 04:30
-- 게시판 접근제어 05:18
-- 댓글, 좋아요, 조회수 05:40 
-- 글 작성 06:16
-- 카테고리별 글 검색 07:10
-- 베스트 글 보기 07:25 
-- 관광지검색 07:50
-- 관광지 좋아요 08:40 
-- 여행 계획 09:22 
-- 여행 계획 추가 09:38 
-- 여행 후기 11:25 
-- 핫플레이스 12:35
-- 마이페이지 13:10 
-- 프로필 사진 추가 13:30
-- 사용자 정보 변경 13:51
-- 찜한 관광지 보기 14:00
-- 회원탈퇴 14:10
-- 어드민페이지 14:30
-- 전체 사용자 조회 14:48
-- 사용자 관리 14:55
-- 날씨확인 15:54 
-- 전기차충전소 16:15
-- 갤러리 기능 16:44
-- 관광지 사진 캐러셀 17:35
-- 하단 컨텐츠 캐러셀 18:00
-- 404 페이지 18:40
-- 미로그인시 자동 리다이렉션 18:50
-- 마무리인사 19:05 
+
+<br>
 
 ## 사용한 기술 스택
+### 프론트엔드
+| Vue3 |    Axios   |  Tailwind   |  Bootstrap |
+| :--------: | :--------: | :------: | :-----: |
+| <img src="https://github.com/sw-jelly/tripoline-backend/assets/72266806/7025cbd9-912b-4356-a06d-7d4134fde200" width="100" height="100">    | <img src="https://github.com/sw-jelly/tripoline-backend/assets/72266806/ddad02a8-47d3-4bee-a306-e9379c3946de" width="100" height="100">    | <img src="https://github.com/sw-jelly/tripoline-backend/assets/72266806/76046a40-1076-4615-83f8-96dcfdac70b7" width="100" height="100"> | <img src="https://github.com/sw-jelly/tripoline-backend/assets/72266806/9ce7e504-caa3-4c55-884c-6e1dc58e9588" width="100" height="100"> 
 
-### FrontEnd
-- Vue3
+### 백엔드
 
-<img width="627" alt="vue3" src="https://github.com/JIINSUNG/EnjoyTripBackEnd/assets/49591292/36c85dec-a8c9-4949-90b1-2819f1424885">
-
-- Axios
-
-<img width="627" alt="biitstrap" src="https://github.com/JIINSUNG/EnjoyTripBackEnd/assets/49591292/2406901e-fad5-447c-94b3-c0ae4429a5a6">
-
-- tailwind
-
-<img width="627" alt="tailwind" src="https://github.com/JIINSUNG/EnjoyTripBackEnd/assets/49591292/751eb223-72a6-46da-969f-a2c1b70a3cf4">
-
-- bootstrap
-
-<img width="627" alt="axios" src="https://github.com/JIINSUNG/EnjoyTripBackEnd/assets/49591292/d8ba361f-c7cc-49e1-b7a4-755cd974aeba">
-
-
-  
-### BackEnd
-- SpringBoot
-
-<img width="627" alt="springboot" src="https://github.com/JIINSUNG/EnjoyTripBackEnd/assets/49591292/818b502d-b914-41f5-bd81-40eb8850630e">
-
-- MyBatis
-  
-<img width="627" alt="mybatis" src="https://github.com/JIINSUNG/EnjoyTripBackEnd/assets/49591292/2aba7e7f-bce2-46e7-852b-b18be84ee2ff">
-
-- MySQL
-  
-<img width="627" alt="mysql" src="https://github.com/JIINSUNG/EnjoyTripBackEnd/assets/49591292/968bb331-0d27-49e4-a448-92a3d44d849a">
-
-- Swagger
-  
-<img width="627" alt="swagger" src="https://github.com/JIINSUNG/EnjoyTripBackEnd/assets/49591292/10b50ed2-010b-4402-87ba-01db5906b860">
-
-
-### 형상관리, 협업 툴
-Git, GitLab (형상관리)
-
-<img width="627" alt="ssafygitlab" src="https://github.com/JIINSUNG/EnjoyTripBackEnd/assets/49591292/574d2df2-dd52-4ac7-83c6-e2386520fa70">
-
-Matter Most (소통 및 자료 공유) 
-
-<img width="248" alt="mattermost" src="https://github.com/JIINSUNG/EnjoyTripBackEnd/assets/49591292/27ae925c-cba0-4139-9c30-8fc740cbf510">
-
-
-
-
+| SpringBoot |   MyBatis  |  MySQL   |
+| :--------: | :--------: | :------: |
+|   <img src="https://github.com/HyeongtaekOh/togeball/assets/86342741/08b644fe-ced1-476e-b8de-95f5b6a96d71" width="100" height="100">    |   <img src="https://github.com/sw-jelly/tripoline-backend/assets/72266806/647a4aee-6b41-4599-a599-9529442e0481" width="100" height="100">    | <img src="https://github.com/sw-jelly/tripoline-backend/assets/72266806/49a9c55b-c67c-47ce-9eb8-1dba6d941f36)" width="100" height="100"> |
 
 ### 사용 API, 라이브러리
-tour api를 통한 관광 데이터 이용 
+| imgbb |    tour api   |  채널 톡   |
+| :--------: | :--------: | :------: |
+| <img src="https://github.com/sw-jelly/tripoline-backend/assets/72266806/d424667a-f766-43f1-ad54-ee02d6bdffbe" width="100" height="100">    | <img src="https://github.com/sw-jelly/tripoline-backend/assets/72266806/6f863c60-79b9-46b1-9014-4de76130b9c4" height="100">    | <img src="https://github.com/sw-jelly/tripoline-backend/assets/72266806/87e1677b-77de-4a4f-8a0e-63eecf6f09c1" width="100" height="100"> |
 
-<img width="248" alt="tourapi" src="https://github.com/JIINSUNG/EnjoyTripBackEnd/assets/49591292/c85d72c3-c3cc-46f6-b001-5bcf56908339">
+[기상청 단기예보 서비스](http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0)
 
-imgbb를 통한 사용자 프로필 및 게시판 사진 업로드 
+[한국전력공사 전기차충전소 운영정보](https://infuser.odcloud.kr/api/stages/38249/api-docs?1653531202059)
 
-<img width="107" alt="imgbb" src="https://github.com/JIINSUNG/EnjoyTripBackEnd/assets/49591292/07a19395-3afa-4083-addf-838fa951e638">
+[한국관광공사 관광사진 정보](http://apis.data.go.kr/B551011/PhotoGalleryService1)
 
-공공데이터 포털을 동안 관광 데이터 이용 
+[한국관광공사 관광정보 서비스](http://apis.data.go.kr/B551011/KorService1)
 
-<img width="228" alt="공공데이터" src="https://github.com/JIINSUNG/EnjoyTripBackEnd/assets/49591292/be7e17c6-d753-4cc6-93dd-286d57f4afbd">
+[전국문화축제 표준 데이터](https://www.data.go.kr/iim/api/selectAPIAcountView.do)
 
-채널톡을 이용한 챗봇 서비스 탑재
+[전국관광지정보 표준데이터](http://api.data.go.kr/openapi/tn_pubr_public_trrsrt_api)
 
-<img width="228" alt="챗봇" src="https://github.com/JIINSUNG/EnjoyTripBackEnd/assets/49591292/44e2540b-f631-40d5-b53a-b37d93a866f7">
+<br>
 
+## 핵심 기능
+#### 관광지 검색
+<img width="1000" alt="관광지 검색" src="https://github.com/sw-jelly/tripoline-backend/assets/72266806/3ea3ebb2-5830-4665-9f57-1b77356bf169">
 
-기상청 단기예보 서비스
-http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0
+#### 여행 계획
+<img width="1000" alt="여행 계획" src="https://github.com/sw-jelly/tripoline-backend/assets/72266806/b4fddc0f-be93-457d-9d5e-d6fb541703e1">
 
-한국전력공사 전기차충전소 운영정보
-https://infuser.odcloud.kr/api/stages/38249/api-docs?1653531202059
+#### 게시판
+<img width="1000" alt="게시판1" src="https://github.com/sw-jelly/tripoline-backend/assets/72266806/6034fe61-58af-44ac-a629-67dad90eacae">
+<img width="1000" alt="게시판2" src="https://github.com/sw-jelly/tripoline-backend/assets/72266806/4511a3e7-05ca-4057-b186-80ec97056a52">
 
-한국관광공사 관광사진 정보
-http://apis.data.go.kr/B551011/PhotoGalleryService1
+<br>
 
-한국관광공사 관광정보 서비스
-http://apis.data.go.kr/B551011/KorService1
-
-전국문화축제 표준 데이터
-[http://api.data.go.kr/openapi/tn_pubr_public_cltur_fstvl_api](https://www.data.go.kr/iim/api/selectAPIAcountView.do)
-
-전국관광지정보 표준데이터
-http://api.data.go.kr/openapi/tn_pubr_public_trrsrt_api
-
+## 기타 산출물
 
 #### 유스케이스 다이어그램
-<img width="1047" alt="메인화면" src="https://github.com/JIINSUNG/EnjoyTripFrontEnd/assets/49591292/2056ccae-1004-4cf1-9b73-914ab13356da">
-
-<img width="1047" alt="게시판" src="https://github.com/JIINSUNG/EnjoyTripFrontEnd/assets/49591292/5fc84826-a1c1-4dc1-802e-1989f1b8d388">
-
-<img width="1047" alt="여행계획" src="https://github.com/JIINSUNG/EnjoyTripFrontEnd/assets/49591292/9584acab-32a8-4eeb-9449-3ec87ab2a8ab">
-
-<img width="1047" alt="기본관리" src="https://github.com/JIINSUNG/EnjoyTripFrontEnd/assets/49591292/c642630e-10b0-4fc3-9b55-59088de77c71">
+<img width="500" alt="메인화면" src="https://github.com/sw-jelly/tripoline-backend/assets/72266806/6f761369-620c-475c-b6bf-9f6434d430f8">
+<img width="500" alt="게시판" src="https://github.com/sw-jelly/tripoline-backend/assets/72266806/c69b96e7-7c39-41eb-8df0-51e2ae666d97">
+<img width="500" alt="여행계획" src="https://github.com/sw-jelly/tripoline-backend/assets/72266806/7673a1de-16a9-4847-b62a-915b581be2da">
+<img width="500" alt="기본관리" src="https://github.com/sw-jelly/tripoline-backend/assets/72266806/d6edab34-23cf-4ff7-9dd4-0f2e9ea5b73f">
 
 #### ERD 다이어그램 
-<img width="1047" alt="테이블구조도" src="https://github.com/JIINSUNG/EnjoyTripFrontEnd/assets/49591292/14af143e-b734-4cc7-a343-69cb16d2bcc5">
-
-#### 클래스다이어그램
-<img width="1047" alt="클래스다이어그램" src="https://github.com/JIINSUNG/EnjoyTripFrontEnd/assets/49591292/1954ab49-aae4-476e-9e3c-63ea029834f0">
-
+![1212](https://github.com/sw-jelly/tripoline-backend/assets/72266806/2f31afae-41a3-41a0-8a2b-875053d3927e)
 
 #### 요구사항 명세서
-<img width="1047" alt="화면설계서1" src="https://github.com/JIINSUNG/EnjoyTripFrontEnd/assets/49591292/aaf1d4d2-e1aa-4ace-b883-32f506453af9">
+![image](https://github.com/sw-jelly/tripoline-backend/assets/72266806/cf0e351f-7122-4c56-bd98-f2f2427b4c90)
 
-<img width="1047" alt="화면설계서2" src="https://github.com/JIINSUNG/EnjoyTripFrontEnd/assets/49591292/c7e9e49f-8d52-492f-b9cb-0be9a1ed78b6">
-
-<img width="1047" alt="화면설계서3" src="https://github.com/JIINSUNG/EnjoyTripFrontEnd/assets/49591292/b02bdfef-26d1-48ad-a499-d63b9f203aa0">
-
-#### 문의 
-- SSAFY 10기 지인성 crm03008@gmail.com 
 
